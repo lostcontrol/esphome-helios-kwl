@@ -21,6 +21,11 @@ easily. However, if you own an older model, this integration is for you.
 
 I only implemented the features I use and find useful but more could be added.
 
+## Disclaimer
+
+As usual, I decline all responsibility if you break your Helios KWL (or anything else
+actually).
+
 ## Links
 
 * RS485 adapter: https://www.aliexpress.com/item/32889414931.html
