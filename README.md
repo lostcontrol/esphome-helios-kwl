@@ -23,5 +23,6 @@ I only implemented the features I use and find useful but more could be added.
 
 ## Links
 
+* RS485 adapter: https://www.aliexpress.com/item/32889414931.html
 * Example datagrams: [helios-kwl.txt](docs/helios-kwl.txt)
 * Protocol: https://wiki.fhem.de/w/images/7/7e/Digit_protocol_english_RS485.pdf
