@@ -1,5 +1,7 @@
 #pragma once
 
+#include <numeric>
+
 #include "esphome.h"
 
 class HeliosKwlComponent : public PollingComponent, public UARTDevice {
