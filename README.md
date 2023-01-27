@@ -21,13 +21,24 @@ easily. However, if you own an older model, this integration is for you.
 
 I only implemented the features I use and find useful but more could be added.
 
+## Wiring diagram
+
+![Wiring diagram](docs/wiring.png)
+
 ## Disclaimer
 
 As usual, I decline all responsibility if you break your Helios KWL (or anything else
 actually).
 
-## Links
+## Shopping list
+
+These are examples of items required for this project. You will also need (silicone) wires and heat shrink tubing.
 
 * RS485 adapter: https://www.aliexpress.com/item/32889414931.html
+* Wemos D1 Mini ESP32: https://fr.aliexpress.com/item/32815738795.html (select D1 MINI ESP32)
+* BEC 5V (input 24V): https://fr.aliexpress.com/item/1865193146.html
+
+## Links
+
 * Example datagrams: [helios-kwl.txt](docs/helios-kwl.txt)
 * Protocol: https://wiki.fhem.de/w/images/7/7e/Digit_protocol_english_RS485.pdf
