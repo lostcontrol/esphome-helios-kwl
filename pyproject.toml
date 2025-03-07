@@ -1,0 +1,44 @@
+[project]
+name = "esphome-helios-kwl"
+dynamic = ["version"]
+description = ''
+readme = "README.md"
+requires-python = ">=3.12"
+keywords = []
+authors = [{ name = "Cyril Jaquier", email = "cyril.jaquier@jaqpot.net" }]
+classifiers = [
+  "Development Status :: 0 - Alpha",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+]
+
+dependencies = ["esphome==2025.2.2"]
+
+[dependency-groups]
+dev = ["ruff>=0.9.10"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+extend-exclude = [".venv"]
+# Ruff handles __init__.py a bit differently, use preview/unsafe-fixes to
+# properly remove unneeded imports.
+preview = true
+unsafe-fixes = true
+
+[tool.ruff.lint]
+select = [
+  "C4",  # comprehensions
+  "E",   # pycodestyle
+  "F",   # pyflakes
+  "I",   # isort
+  "RUF", # ruff specific
+  "T20", # print
+  "UP",  # pyupgrade
+  "W",   # pydocstyle warning
+  "NPY", # numpy
+  "PT",  # pytest
+  "RSE", # flake8-raise
+  "DTZ", # flake8-datetime
+]
