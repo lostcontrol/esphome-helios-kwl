@@ -1,10 +1,8 @@
 esphome:
   name: helios-kwl
-  platform: ESP32
-  board: wemos_d1_mini32
-  includes:
-    - helios-kwl.h
 
+esp32:
+  board: wemos_d1_mini32
 
 # Enable logging
 logger:
@@ -13,83 +11,24 @@ logger:
 
 # Enable Home Assistant API
 api:
-  password: !secret api_key
+  encryption:
+    key: !secret key
 
 ota:
+  platform: esphome
   password: ""
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-  domain: ".localdomain"
+  domain: ".local"
+  power_save_mode: none
 
 status_led:
   pin: GPIO2
 
-sensor:
-  - platform: wifi_signal
-    name: "WiFi Signal Sensor"
-    update_interval: 30s
-
-  - name: "Temperature outside"
-    id: sensor_temperature_outside
-    platform: template
-    unit_of_measurement: "°C"
-    accuracy_decimals: 0
-    lambda: "return {};"
-  - name: "Temperature exhaust"
-    id: sensor_temperature_exhaust
-    platform: template
-    unit_of_measurement: "°C"
-    accuracy_decimals: 0
-    lambda: "return {};"
-  - name: "Temperature inside"
-    id: sensor_temperature_inside
-    platform: template
-    unit_of_measurement: "°C"
-    accuracy_decimals: 0
-    lambda: "return {};"
-  - name: "Temperature incoming"
-    id: sensor_temperature_incoming
-    platform: template
-    unit_of_measurement: "°C"
-    accuracy_decimals: 0
-    lambda: "return {};"
-  - name: "Fan speed"
-    id: fan_speed
-    platform: template
-    accuracy_decimals: 0
-    lambda: "return {};"
-
-binary_sensor:
-  - name: "Power state"
-    id: power_state
-    platform: template
-    device_class: power
-    lambda: "return {};"
-  - name: "By-pass state"
-    id: bypass_state
-    platform: template
-    lambda: "return {};"
-  - name: "Heating indicator"
-    id: heating_indicator
-    platform: template
-    device_class: heat
-    lambda: "return {};"
-  - name: "Fault indicator"
-    id: fault_indicator
-    platform: template
-    device_class: problem
-    lambda: "return {};"
-  - name: "Service reminder"
-    id: service_reminder
-    platform: template
-    lambda: "return {};"
-
-switch:
-  - platform: output
-    name: "Winter mode"
-    output: helios_kwl_winter
+external_components:
+  - source: components
 
 uart:
   id: uart_bus
@@ -99,26 +38,74 @@ uart:
   #debug:
     #dummy_receiver: true
 
-custom_component:
-  - lambda: |-
-      auto helios_kwl = new HeliosKwlComponent(
-        id(uart_bus),
-        id(fan_speed),
-        id(sensor_temperature_outside),
-        id(sensor_temperature_exhaust),
-        id(sensor_temperature_inside),
-        id(sensor_temperature_incoming),
-        id(power_state),
-        id(bypass_state),
-        id(heating_indicator),
-        id(fault_indicator),
-        id(service_reminder)
-      );
-      App.register_component(helios_kwl);
-      return {helios_kwl};
+helios_kwl:
+  id: helios_kwl_0
 
-    components:
-      id: helios_kwl
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal Sensor"
+    update_interval: 30s
+
+  - platform: helios_kwl
+    helios_kwl_id: helios_kwl_0
+    fan_speed:
+      name: "Fan speed"
+      id: fan_speed
+    temperature_outside:
+      name: "Temperature outside"
+      id: sensor_temperature_outside
+      filters:
+        - median:
+            window_size: 3
+            send_every: 1
+    temperature_exhaust:
+      name: "Temperature exhaust"
+      id: sensor_temperature_exhaust
+      filters:
+        - median:
+            window_size: 3
+            send_every: 1
+    temperature_inside:
+      name: "Temperature inside"
+      id: sensor_temperature_inside
+      filters:
+        - median:
+            window_size: 3
+            send_every: 1
+    temperature_incoming:
+      name: "Temperature incoming"
+      id: sensor_temperature_incoming
+      filters:
+        - median:
+            window_size: 3
+            send_every: 1
+
+binary_sensor:
+  - platform: helios_kwl
+    helios_kwl_id: helios_kwl_0
+    power_state:
+      name: "Power state"
+      id: power_state
+    bypass_state:
+      name: "By-pass state"
+      id: bypass_state
+    heating_indicator:
+      name: "Heating indicator"
+      id: heating_indicator
+    fault_indicator:
+      name: "Fault indicator"
+      id: fault_indicator
+    service_reminder:
+      name: "Service reminder"
+      id: service_reminder
+
+
+switch:
+  - platform: helios_kwl
+    helios_kwl_id: helios_kwl_0
+    winter_mode:
+      name: "Winter mode"
+      id: helios_kwl_winter
 
 fan:
   - platform: speed
@@ -127,26 +114,7 @@ fan:
     name: "Fan speed"
 
 output:
-  - platform: custom
-    type: float
-    lambda: |-
-      auto helios_kwl_speed = new HeliosKwlSpeedOutput(
-        static_cast<HeliosKwlComponent*>(id(helios_kwl))
-      );
-      App.register_component(helios_kwl_speed);
-      return {helios_kwl_speed};
-
-    outputs:
+  - platform: helios_kwl
+    helios_kwl_id: helios_kwl_0
+    fan_speed:
       id: helios_kwl_speed
-
-  - platform: custom
-    type: binary
-    lambda: |-
-      auto helios_kwl_winter = new HeliosKwlWinterModeOutput(
-        static_cast<HeliosKwlComponent*>(id(helios_kwl))
-      );
-      App.register_component(helios_kwl_winter);
-      return {helios_kwl_winter};
-
-    outputs:
-      id: helios_kwl_winter
