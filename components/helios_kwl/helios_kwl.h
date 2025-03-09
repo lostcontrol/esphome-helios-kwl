@@ -27,10 +27,10 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   void set_state_flag(uint8_t bit, bool state);
 
   void set_fan_speed_sensor(esphome::sensor::Sensor* sensor) { m_fan_speed = sensor; }
-  void set_temperature_outside_sensor(esphome::sensor::Sensor* sensor) { m_sensor_temperature_outside = sensor; }
-  void set_temperature_exhaust_sensor(esphome::sensor::Sensor* sensor) { m_sensor_temperature_exhaust = sensor; }
-  void set_temperature_inside_sensor(esphome::sensor::Sensor* sensor) { m_sensor_temperature_inside = sensor; }
-  void set_temperature_incoming_sensor(esphome::sensor::Sensor* sensor) { m_sensor_temperature_incoming = sensor; }
+  void set_temperature_outside_sensor(esphome::sensor::Sensor* sensor) { m_temperature_outside = sensor; }
+  void set_temperature_exhaust_sensor(esphome::sensor::Sensor* sensor) { m_temperature_exhaust = sensor; }
+  void set_temperature_inside_sensor(esphome::sensor::Sensor* sensor) { m_temperature_inside = sensor; }
+  void set_temperature_incoming_sensor(esphome::sensor::Sensor* sensor) { m_temperature_incoming = sensor; }
 
   void set_power_state_sensor(esphome::binary_sensor::BinarySensor* sensor) { m_power_state = sensor; }
   void set_bypass_state_sensor(esphome::binary_sensor::BinarySensor* sensor) { m_bypass_state = sensor; }
@@ -60,10 +60,10 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
 
  private:
   esphome::sensor::Sensor* m_fan_speed{nullptr};
-  esphome::sensor::Sensor* m_sensor_temperature_outside{nullptr};
-  esphome::sensor::Sensor* m_sensor_temperature_exhaust{nullptr};
-  esphome::sensor::Sensor* m_sensor_temperature_inside{nullptr};
-  esphome::sensor::Sensor* m_sensor_temperature_incoming{nullptr};
+  esphome::sensor::Sensor* m_temperature_outside{nullptr};
+  esphome::sensor::Sensor* m_temperature_exhaust{nullptr};
+  esphome::sensor::Sensor* m_temperature_inside{nullptr};
+  esphome::sensor::Sensor* m_temperature_incoming{nullptr};
 
   esphome::binary_sensor::BinarySensor* m_power_state{nullptr};
   esphome::binary_sensor::BinarySensor* m_bypass_state{nullptr};

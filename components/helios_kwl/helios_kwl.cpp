@@ -36,28 +36,49 @@ const int HeliosKwlComponent::TEMPERATURE[] = {
 void HeliosKwlComponent::setup() { ESP_LOGI("custom", "setup()"); }
 
 void HeliosKwlComponent::update() {
-  if (const auto value = poll_register(0x32)) {
-    m_sensor_temperature_outside->publish_state(TEMPERATURE[*value]);
+  if (m_temperature_outside != nullptr) {
+    if (const auto value = poll_register(0x32)) {
+      m_temperature_outside->publish_state(TEMPERATURE[*value]);
+    }
   }
-  if (const auto value = poll_register(0x33)) {
-    m_sensor_temperature_exhaust->publish_state(TEMPERATURE[*value]);
+  if (m_temperature_exhaust != nullptr) {
+    if (const auto value = poll_register(0x33)) {
+      m_temperature_exhaust->publish_state(TEMPERATURE[*value]);
+    }
   }
-  if (const auto value = poll_register(0x34)) {
-    m_sensor_temperature_inside->publish_state(TEMPERATURE[*value]);
+  if (m_temperature_inside != nullptr) {
+    if (const auto value = poll_register(0x34)) {
+      m_temperature_inside->publish_state(TEMPERATURE[*value]);
+    }
   }
-  if (const auto value = poll_register(0x35)) {
-    m_sensor_temperature_incoming->publish_state(TEMPERATURE[*value]);
+  if (m_temperature_incoming != nullptr) {
+    if (const auto value = poll_register(0x35)) {
+      m_temperature_incoming->publish_state(TEMPERATURE[*value]);
+    }
   }
-  if (const auto value = poll_register(0x29)) {
-    m_fan_speed->publish_state(count_ones(*value));
+  if (m_fan_speed != nullptr) {
+    if (const auto value = poll_register(0x29)) {
+      m_fan_speed->publish_state(count_ones(*value));
+    }
   }
   if (const auto value = poll_register(0xA3)) {
-    m_power_state->publish_state(*value & (0x01 << 0));
-    m_bypass_state->publish_state(*value & (0x01 << 3));
-    m_heating_indicator->publish_state(*value & (0x01 << 5));
-    m_fault_indicator->publish_state(*value & (0x01 << 6));
-    m_service_reminder->publish_state(*value & (0x01 << 7));
+    if (m_power_state != nullptr) {
+      m_power_state->publish_state(*value & (0x01 << 0));
+    }
+    if (m_bypass_state != nullptr) {
+      m_bypass_state->publish_state(*value & (0x01 << 3));
+    }
+    if (m_heating_indicator != nullptr) {
+      m_heating_indicator->publish_state(*value & (0x01 << 5));
+    }
+    if (m_fault_indicator != nullptr) {
+      m_fault_indicator->publish_state(*value & (0x01 << 6));
+    }
+    if (m_service_reminder != nullptr) {
+      m_service_reminder->publish_state(*value & (0x01 << 7));
+    }
   }
+}
 
 void HeliosKwlComponent::dump_config() {
   ESP_LOGCONFIG(TAG, "Helios KWL:");
