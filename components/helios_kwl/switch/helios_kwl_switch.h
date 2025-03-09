@@ -11,7 +11,10 @@ class HeliosKwlWinterMode : public Component, public switch_::Switch {
  public:
   void set_parent(HeliosKwlComponent* parent) { m_parent = parent; };
 
-  void write_state(bool state) override { m_parent->set_state_flag(3, state); }
+  void write_state(bool state) override {
+    m_parent->set_state_flag(3, state);
+    publish_state(state);
+  }
 
  private:
   HeliosKwlComponent* m_parent;
