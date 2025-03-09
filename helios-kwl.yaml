@@ -99,7 +99,6 @@ binary_sensor:
       name: "Service reminder"
       id: service_reminder
 
-
 switch:
   - platform: helios_kwl
     helios_kwl_id: helios_kwl_0
