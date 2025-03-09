@@ -25,6 +25,20 @@ I only implemented the features I use and find useful but more could be added.
 
 ![Wiring diagram](docs/wiring.png)
 
+## Installation
+
+Have a look at the provided `helios-kwl.yaml`. This integration written as an ESPHome
+[external component](https://esphome.io/components/external_components) and can be easily integrated into your
+configuration. The easiest way is to pull the component via Git:
+
+```yaml
+external_components:
+  - source:
+      type: git
+      url: https://github.com/lostcontrol/esphome-helios-kwl/
+      ref: 2025.3.1
+```
+
 ## Disclaimer
 
 As usual, I decline all responsibility if you break your Helios KWL (or anything else
