@@ -21,19 +21,7 @@ const int HeliosKwlComponent::TEMPERATURE[] = {
     52,  53,  53,  54,  55,  56,  57,  59,  60,  61,  62,  63,  65,  66,  68,  69,  71,  73,  75,  77,  79,  81,
     82,  86,  90,  93,  97,  100, 100, 100, 100, 100, 100, 100, 100, 100};
 
-// void HeliosKwlComponent::setup() {
-
-// }
-
-// void HeliosKwlComponent::loop() {
-
-// }
-
-// void HeliosKwlComponent::dump_config(){
-//     ESP_LOGCONFIG(TAG, "Empty UART component");
-// }
-
-void HeliosKwlComponent::setup() { ESP_LOGI("custom", "setup()"); }
+void HeliosKwlComponent::setup() { ESP_LOGI(TAG, "setup()"); }
 
 void HeliosKwlComponent::update() {
   if (m_temperature_outside != nullptr) {
@@ -100,10 +88,10 @@ void HeliosKwlComponent::set_fan_speed(float speed) {
     assert(speed >= 0.f && speed <= 8.f);
     const uint8_t speed_byte = 0xFF >> (8 - static_cast<int>(speed * 8));
     if (set_value(0x29, speed_byte)) {
-      ESP_LOGD("custom", "Wrote speed: %02x", speed_byte);
+      ESP_LOGD(TAG, "Wrote speed: %02x", speed_byte);
       set_state_flag(0, true);
     } else {
-      ESP_LOGE("custom", "Failed to set fan speed");
+      ESP_LOGE(TAG, "Failed to set fan speed");
     }
   }
 }
@@ -111,7 +99,7 @@ void HeliosKwlComponent::set_fan_speed(float speed) {
 void HeliosKwlComponent::set_state_flag(uint8_t bit, bool state) {
   if (auto value = poll_register(0xA3)) {
     if (state == ((*value >> bit) & 0x01)) {
-      ESP_LOGD("custom", "State flag already set");
+      ESP_LOGD(TAG, "State flag already set");
     } else {
       if (state) {
         *value |= 0x01 << bit;
@@ -119,13 +107,13 @@ void HeliosKwlComponent::set_state_flag(uint8_t bit, bool state) {
         *value &= ~(0x01 << bit);
       }
       if (set_value(0xA3, *value)) {
-        ESP_LOGD("custom", "Wrote state flag to: %x", *value);
+        ESP_LOGD(TAG, "Wrote state flag to: %x", *value);
       } else {
-        ESP_LOGE("custom", "Failed to set state flag");
+        ESP_LOGE(TAG, "Failed to set state flag");
       }
     }
   } else {
-    ESP_LOGE("custom", "Unable to poll register 0xA3");
+    ESP_LOGE(TAG, "Unable to poll register 0xA3");
   }
 }
 
@@ -147,11 +135,11 @@ optional<uint8_t> HeliosKwlComponent::poll_register(uint8_t address) {
         return array[4];
       } else {
         const auto hex = format_hex_pretty(array.data(), array.size());
-        ESP_LOGE("custom", "Wrong response from mainboard: %s", hex.c_str());
+        ESP_LOGE(TAG, "Wrong response from mainboard: %s", hex.c_str());
       }
     } else {
       const auto hex = format_hex_pretty(array.data(), array.size());
-      ESP_LOGE("custom", "Bad checksum for response: %s", hex.c_str());
+      ESP_LOGE(TAG, "Bad checksum for response: %s", hex.c_str());
     }
   }
   return {};
