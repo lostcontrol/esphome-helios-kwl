@@ -10,16 +10,11 @@ Of course, it all makes sense if integrated with the amazing Home Assistant:
 
 ## Introduction
 
-I own since 2012 a Helios KWL EC 500 R. Back then, I checked for the KNX module that would allow me
-to integrate the device into my home automation bus. However, the price was just crazy high. So
-after so many years, I finally decided to hack it myself. I ordered a RS485 / UART adapter, sniffed
-a few packets and actually found the documentation of the protocol online. I'm using a BEC to power
-the ESP32 from the 24V of the KWL.
+I've had a Helios KWL EC 500 R since 2012. Back then, I looked into getting the KNX module to hook it up to my home automation, but the price was ridiculous. So, after all this time, I decided to just do it myself. I got an RS485/UART adapter, sniffed the data packets, and actually found the protocol documentation online. I'm powering an ESP32 from the KWL's 24V using a BEC.
 
-Newer version of the Helios product now have directly an Ethernet port and can be integrated more
-easily. However, if you own an older model, this integration is for you.
+Newer Helios units have Ethernet built-in, making integration much easier. But if you've got an older model, this is for you.
 
-I only implemented the features I use and find useful but more could be added.
+I've only programmed the features I use and need, but you could definitely add more.
 
 ## Wiring diagram
 
@@ -27,9 +22,7 @@ I only implemented the features I use and find useful but more could be added.
 
 ## Installation
 
-Have a look at the provided `helios-kwl.yaml`. This integration written as an ESPHome
-[external component](https://esphome.io/components/external_components) and can be easily integrated into your
-configuration. The easiest way is to pull the component via Git:
+Check out the `helios-kwl.yaml` file. This is an ESPHome [external component](https://esphome.io/components/external_components) you can easily add to your setup. The best way to get it is using Git:
 
 ```yaml
 external_components:
@@ -41,8 +34,7 @@ external_components:
 
 ## Disclaimer
 
-As usual, I decline all responsibility if you break your Helios KWL (or anything else
-actually).
+As usual, I decline all responsibility if you break your Helios KWL (or anything else actually).
 
 ## Shopping list
 
