@@ -4,9 +4,6 @@ from esphome.components import switch
 
 from .. import CONF_HELIOS_KWL_ID, HELIOS_KWL_COMPONENT_SCHEMA, helios_kwl_component_ns
 
-DEPENDENCIES = ["uart"]
-
-
 HeliosKwlWinterMode = helios_kwl_component_ns.class_("HeliosKwlWinterMode", switch.Switch, cg.Component)
 
 TYPES = {
@@ -23,5 +20,4 @@ async def to_code(config):
             conf = config[type]
             var = await switch.new_switch(conf)
             await cg.register_component(var, conf)
-            # cg.add(getattr(parent, f"set_{type}_switch")(var))
             cg.add(var.set_parent(parent))
