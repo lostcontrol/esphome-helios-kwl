@@ -58,6 +58,18 @@ void HeliosKwlComponent::update() {
     m_fault_indicator->publish_state(*value & (0x01 << 6));
     m_service_reminder->publish_state(*value & (0x01 << 7));
   }
+
+void HeliosKwlComponent::dump_config() {
+  ESP_LOGCONFIG(TAG, "Helios KWL:");
+  LOG_SENSOR("  ", "Fan speed", m_fan_speed);
+  LOG_SENSOR("  ", "Temperature outside", m_temperature_outside);
+  LOG_SENSOR("  ", "Temperature exhaust", m_temperature_exhaust);
+  LOG_SENSOR("  ", "Temperature inside", m_temperature_inside);
+  LOG_SENSOR("  ", "Temperature incoming", m_temperature_incoming);
+  LOG_BINARY_SENSOR("  ", "Power state", m_power_state);
+  LOG_BINARY_SENSOR("  ", "Bypass state", m_bypass_state);
+  LOG_BINARY_SENSOR("  ", "Fault indicator", m_fault_indicator);
+  LOG_BINARY_SENSOR("  ", "Service reminder", m_service_reminder);
 }
 
 void HeliosKwlComponent::set_fan_speed(float speed) {

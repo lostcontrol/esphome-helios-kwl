@@ -21,6 +21,7 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
 
   void setup() override;
   void update() override;
+  void dump_config() override;
 
   void set_fan_speed(float speed);
   void set_state_flag(uint8_t bit, bool state);
