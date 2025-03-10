@@ -12,7 +12,7 @@ namespace helios_kwl_component {
 
 class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
  private:
-  static constexpr uint8_t ADDRESS = 0x22;
+  static constexpr uint8_t ADDRESS = 0x2F;
   static constexpr uint8_t MAINBOARD = 0x11;
   static const int TEMPERATURE[];
 
