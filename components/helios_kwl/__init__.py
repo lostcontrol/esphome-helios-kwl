@@ -15,7 +15,7 @@ HELIOS_KWL_COMPONENT_SCHEMA = cv.Schema({cv.Required(CONF_HELIOS_KWL_ID): cv.use
 
 CONFIG_SCHEMA = (
     cv.Schema({cv.GenerateID(): cv.declare_id(HeliosKwlComponent)})
-    .extend(cv.polling_component_schema("10s"))
+    .extend(cv.polling_component_schema("2s"))
     .extend(uart.UART_DEVICE_SCHEMA)
 )
 

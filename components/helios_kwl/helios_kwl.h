@@ -42,6 +42,13 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   void set_winter_mode_switch(switch_::Switch* switch_) { m_winter_mode_switch = switch_; }
 
  private:
+  void poll_temperature_outside();
+  void poll_temperature_exhaust();
+  void poll_temperature_inside();
+  void poll_temperature_incoming();
+  void poll_fan_speed();
+  void poll_states();
+
   optional<uint8_t> poll_register(uint8_t address);
 
   bool set_value(uint8_t address, uint8_t value);
@@ -75,6 +82,10 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   binary_sensor::BinarySensor* m_service_reminder{nullptr};
 
   switch_::Switch* m_winter_mode_switch{nullptr};
+
+  using PollerFunction = std::function<void()>;
+  std::vector<PollerFunction> m_pollers{};
+  std::vector<PollerFunction>::const_iterator m_current_poller{};
 };
 
 }  // namespace helios_kwl_component

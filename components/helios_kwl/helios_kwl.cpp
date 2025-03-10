@@ -21,50 +21,46 @@ const int HeliosKwlComponent::TEMPERATURE[] = {
     52,  53,  53,  54,  55,  56,  57,  59,  60,  61,  62,  63,  65,  66,  68,  69,  71,  73,  75,  77,  79,  81,
     82,  86,  90,  93,  97,  100, 100, 100, 100, 100, 100, 100, 100, 100};
 
-void HeliosKwlComponent::setup() { ESP_LOGI(TAG, "setup()"); }
+void HeliosKwlComponent::setup() {
+  ESP_LOGI(TAG, "setup()");
+
+  if (m_temperature_outside != nullptr) {
+    m_pollers.push_back([this]() { poll_temperature_outside(); });
+  }
+
+  if (m_temperature_exhaust != nullptr) {
+    m_pollers.push_back([this]() { poll_temperature_exhaust(); });
+  }
+
+  if (m_temperature_inside != nullptr) {
+    m_pollers.push_back([this]() { poll_temperature_inside(); });
+  }
+
+  if (m_temperature_incoming != nullptr) {
+    m_pollers.push_back([this]() { poll_temperature_incoming(); });
+  }
+
+  if (m_fan_speed != nullptr) {
+    m_pollers.push_back([this]() { poll_fan_speed(); });
+  }
+
+  const std::vector<const EntityBase*> states{m_power_state,       m_bypass_state,    m_winter_mode_switch,
+                                              m_heating_indicator, m_fault_indicator, m_service_reminder};
+  if (std::any_of(states.cbegin(), states.cend(), [](const EntityBase* pointer) { return pointer != nullptr; })) {
+    m_pollers.push_back([&]() { poll_states(); });
+  }
+
+  m_current_poller = m_pollers.cbegin();
+}
 
 void HeliosKwlComponent::update() {
-  if (m_temperature_outside != nullptr) {
-    if (const auto value = poll_register(0x32)) {
-      m_temperature_outside->publish_state(TEMPERATURE[*value]);
-    }
-  }
-  if (m_temperature_exhaust != nullptr) {
-    if (const auto value = poll_register(0x33)) {
-      m_temperature_exhaust->publish_state(TEMPERATURE[*value]);
-    }
-  }
-  if (m_temperature_inside != nullptr) {
-    if (const auto value = poll_register(0x34)) {
-      m_temperature_inside->publish_state(TEMPERATURE[*value]);
-    }
-  }
-  if (m_temperature_incoming != nullptr) {
-    if (const auto value = poll_register(0x35)) {
-      m_temperature_incoming->publish_state(TEMPERATURE[*value]);
-    }
-  }
-  if (m_fan_speed != nullptr) {
-    if (const auto value = poll_register(0x29)) {
-      m_fan_speed->publish_state(count_ones(*value));
-    }
-  }
-  if (const auto value = poll_register(0xA3)) {
-    if (m_power_state != nullptr) {
-      m_power_state->publish_state(*value & (0x01 << 0));
-    }
-    if (m_bypass_state != nullptr) {
-      m_bypass_state->publish_state(*value & (0x01 << 3));
-    }
-    if (m_heating_indicator != nullptr) {
-      m_heating_indicator->publish_state(*value & (0x01 << 5));
-    }
-    if (m_fault_indicator != nullptr) {
-      m_fault_indicator->publish_state(*value & (0x01 << 6));
-    }
-    if (m_service_reminder != nullptr) {
-      m_service_reminder->publish_state(*value & (0x01 << 7));
-    }
+  if (m_current_poller != m_pollers.cend()) {
+    (*m_current_poller)();
+    // Move to the next polling function
+    std::advance(m_current_poller, 1);
+  } else {
+    // Start again from the beginning
+    m_current_poller = m_pollers.cbegin();
   }
 }
 
@@ -114,6 +110,57 @@ void HeliosKwlComponent::set_state_flag(uint8_t bit, bool state) {
     }
   } else {
     ESP_LOGE(TAG, "Unable to poll register 0xA3");
+  }
+}
+
+void HeliosKwlComponent::poll_temperature_outside() {
+  if (const auto value = poll_register(0x32)) {
+    m_temperature_outside->publish_state(TEMPERATURE[*value]);
+  }
+}
+
+void HeliosKwlComponent::poll_temperature_exhaust() {
+  if (const auto value = poll_register(0x33)) {
+    m_temperature_exhaust->publish_state(TEMPERATURE[*value]);
+  }
+}
+
+void HeliosKwlComponent::poll_temperature_inside() {
+  if (const auto value = poll_register(0x34)) {
+    m_temperature_inside->publish_state(TEMPERATURE[*value]);
+  }
+}
+
+void HeliosKwlComponent::poll_temperature_incoming() {
+  if (const auto value = poll_register(0x35)) {
+    m_temperature_incoming->publish_state(TEMPERATURE[*value]);
+  }
+}
+
+void HeliosKwlComponent::poll_fan_speed() {
+  if (const auto value = poll_register(0x29)) {
+    m_fan_speed->publish_state(count_ones(*value));
+  }
+}
+
+void HeliosKwlComponent::poll_states() {
+  if (const auto value = poll_register(0xA3)) {
+    if (m_power_state != nullptr) {
+      m_power_state->publish_state(*value & (0x01 << 0));
+    }
+    const bool bypass_state = *value & (0x01 << 3);
+    if (m_bypass_state != nullptr) {
+      m_bypass_state->publish_state(bypass_state);
+    }
+    if (m_heating_indicator != nullptr) {
+      m_heating_indicator->publish_state(*value & (0x01 << 5));
+    }
+    if (m_fault_indicator != nullptr) {
+      m_fault_indicator->publish_state(*value & (0x01 << 6));
+    }
+    if (m_service_reminder != nullptr) {
+      m_service_reminder->publish_state(*value & (0x01 << 7));
+    }
   }
 }
 
