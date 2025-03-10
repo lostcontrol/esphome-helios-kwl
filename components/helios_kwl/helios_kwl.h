@@ -26,17 +26,17 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   void set_fan_speed(float speed);
   void set_state_flag(uint8_t bit, bool state);
 
-  void set_fan_speed_sensor(esphome::sensor::Sensor* sensor) { m_fan_speed = sensor; }
-  void set_temperature_outside_sensor(esphome::sensor::Sensor* sensor) { m_temperature_outside = sensor; }
-  void set_temperature_exhaust_sensor(esphome::sensor::Sensor* sensor) { m_temperature_exhaust = sensor; }
-  void set_temperature_inside_sensor(esphome::sensor::Sensor* sensor) { m_temperature_inside = sensor; }
-  void set_temperature_incoming_sensor(esphome::sensor::Sensor* sensor) { m_temperature_incoming = sensor; }
+  void set_fan_speed_sensor(sensor::Sensor* sensor) { m_fan_speed = sensor; }
+  void set_temperature_outside_sensor(sensor::Sensor* sensor) { m_temperature_outside = sensor; }
+  void set_temperature_exhaust_sensor(sensor::Sensor* sensor) { m_temperature_exhaust = sensor; }
+  void set_temperature_inside_sensor(sensor::Sensor* sensor) { m_temperature_inside = sensor; }
+  void set_temperature_incoming_sensor(sensor::Sensor* sensor) { m_temperature_incoming = sensor; }
 
-  void set_power_state_sensor(esphome::binary_sensor::BinarySensor* sensor) { m_power_state = sensor; }
-  void set_bypass_state_sensor(esphome::binary_sensor::BinarySensor* sensor) { m_bypass_state = sensor; }
-  void set_heating_indicator_sensor(esphome::binary_sensor::BinarySensor* sensor) { m_heating_indicator = sensor; }
-  void set_fault_indicator_sensor(esphome::binary_sensor::BinarySensor* sensor) { m_fault_indicator = sensor; }
-  void set_service_reminder_sensor(esphome::binary_sensor::BinarySensor* sensor) { m_service_reminder = sensor; }
+  void set_power_state_sensor(binary_sensor::BinarySensor* sensor) { m_power_state = sensor; }
+  void set_bypass_state_sensor(binary_sensor::BinarySensor* sensor) { m_bypass_state = sensor; }
+  void set_heating_indicator_sensor(binary_sensor::BinarySensor* sensor) { m_heating_indicator = sensor; }
+  void set_fault_indicator_sensor(binary_sensor::BinarySensor* sensor) { m_fault_indicator = sensor; }
+  void set_service_reminder_sensor(binary_sensor::BinarySensor* sensor) { m_service_reminder = sensor; }
 
  private:
   optional<uint8_t> poll_register(uint8_t address);
@@ -59,17 +59,17 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   static uint8_t count_ones(uint8_t byte);
 
  private:
-  esphome::sensor::Sensor* m_fan_speed{nullptr};
-  esphome::sensor::Sensor* m_temperature_outside{nullptr};
-  esphome::sensor::Sensor* m_temperature_exhaust{nullptr};
-  esphome::sensor::Sensor* m_temperature_inside{nullptr};
-  esphome::sensor::Sensor* m_temperature_incoming{nullptr};
+  sensor::Sensor* m_fan_speed{nullptr};
+  sensor::Sensor* m_temperature_outside{nullptr};
+  sensor::Sensor* m_temperature_exhaust{nullptr};
+  sensor::Sensor* m_temperature_inside{nullptr};
+  sensor::Sensor* m_temperature_incoming{nullptr};
 
-  esphome::binary_sensor::BinarySensor* m_power_state{nullptr};
-  esphome::binary_sensor::BinarySensor* m_bypass_state{nullptr};
-  esphome::binary_sensor::BinarySensor* m_heating_indicator{nullptr};
-  esphome::binary_sensor::BinarySensor* m_fault_indicator{nullptr};
-  esphome::binary_sensor::BinarySensor* m_service_reminder{nullptr};
+  binary_sensor::BinarySensor* m_power_state{nullptr};
+  binary_sensor::BinarySensor* m_bypass_state{nullptr};
+  binary_sensor::BinarySensor* m_heating_indicator{nullptr};
+  binary_sensor::BinarySensor* m_fault_indicator{nullptr};
+  binary_sensor::BinarySensor* m_service_reminder{nullptr};
 };
 
 }  // namespace helios_kwl_component
