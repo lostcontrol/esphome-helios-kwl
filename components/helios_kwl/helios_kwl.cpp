@@ -152,6 +152,9 @@ void HeliosKwlComponent::poll_states() {
     if (m_bypass_state != nullptr) {
       m_bypass_state->publish_state(bypass_state);
     }
+    if (m_winter_mode_switch != nullptr) {
+      m_winter_mode_switch->publish_state(bypass_state);
+    }
     if (m_heating_indicator != nullptr) {
       m_heating_indicator->publish_state(*value & (0x01 << 5));
     }
