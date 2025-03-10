@@ -4,6 +4,7 @@
 
 #include "esphome/components/binary_sensor/binary_sensor.h"
 #include "esphome/components/sensor/sensor.h"
+#include "esphome/components/switch/switch.h"
 #include "esphome/components/uart/uart.h"
 #include "esphome/core/component.h"
 
@@ -38,6 +39,8 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   void set_fault_indicator_sensor(binary_sensor::BinarySensor* sensor) { m_fault_indicator = sensor; }
   void set_service_reminder_sensor(binary_sensor::BinarySensor* sensor) { m_service_reminder = sensor; }
 
+  void set_winter_mode_switch(switch_::Switch* switch_) { m_winter_mode_switch = switch_; }
+
  private:
   optional<uint8_t> poll_register(uint8_t address);
 
@@ -70,6 +73,8 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   binary_sensor::BinarySensor* m_heating_indicator{nullptr};
   binary_sensor::BinarySensor* m_fault_indicator{nullptr};
   binary_sensor::BinarySensor* m_service_reminder{nullptr};
+
+  switch_::Switch* m_winter_mode_switch{nullptr};
 };
 
 }  // namespace helios_kwl_component
