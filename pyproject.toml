@@ -13,7 +13,10 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
 ]
 
-dependencies = ["esphome==2025.2.2"]
+dependencies = [
+    "esphome>=2025.2.2",
+    "pip>=25.2",
+]
 
 [dependency-groups]
 dev = ["ruff>=0.9.10"]
@@ -22,10 +25,6 @@ dev = ["ruff>=0.9.10"]
 target-version = "py312"
 line-length = 120
 extend-exclude = [".venv"]
-# Ruff handles __init__.py a bit differently, use preview/unsafe-fixes to
-# properly remove unneeded imports.
-preview = true
-unsafe-fixes = true
 
 [tool.ruff.lint]
 select = [

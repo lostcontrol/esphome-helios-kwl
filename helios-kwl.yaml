@@ -3,6 +3,8 @@ esphome:
 
 esp32:
   board: wemos_d1_mini32
+  framework:
+    type: esp-idf
 
 # Enable logging
 logger:
@@ -21,7 +23,6 @@ ota:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-  domain: ".local"
   power_save_mode: none
 
 status_led:
