@@ -48,3 +48,4 @@ These are examples of items required for this project. You will also need (silic
 
 * Example datagrams: [helios-kwl.txt](docs/helios-kwl.txt)
 * Protocol: https://wiki.fhem.de/w/images/7/7e/Digit_protocol_english_RS485.pdf
+* Loïc Dugay extended support for most registers and even built an awesome replacement remote: https://github.com/loicdugay/esphome-helios-kwl
