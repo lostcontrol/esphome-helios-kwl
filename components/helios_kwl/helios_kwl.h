@@ -11,6 +11,8 @@
 namespace esphome {
 namespace helios_kwl_component {
 
+class HeliosKwlFan;
+
 class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
  private:
   static constexpr uint8_t ADDRESS = 0x2F;
@@ -24,8 +26,10 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   void update() override;
   void dump_config() override;
 
-  void set_fan_speed(float speed);
+  void control_fan(bool on, optional<uint8_t> speed);
   void set_state_flag(uint8_t bit, bool state);
+
+  void set_fan(HeliosKwlFan* fan) { m_fan = fan; }
 
   void set_fan_speed_sensor(sensor::Sensor* sensor) { m_fan_speed = sensor; }
   void set_temperature_outside_sensor(sensor::Sensor* sensor) { m_temperature_outside = sensor; }
@@ -82,6 +86,8 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   binary_sensor::BinarySensor* m_service_reminder{nullptr};
 
   switch_::Switch* m_winter_mode_switch{nullptr};
+
+  HeliosKwlFan* m_fan{nullptr};
 
   using PollerFunction = std::function<void()>;
   std::vector<PollerFunction> m_pollers{};

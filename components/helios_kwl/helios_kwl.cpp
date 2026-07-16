@@ -1,4 +1,5 @@
 #include "helios_kwl.h"
+#include "fan/helios_kwl_fan.h"
 
 #include "esphome/core/log.h"
 
@@ -77,17 +78,23 @@ void HeliosKwlComponent::dump_config() {
   LOG_BINARY_SENSOR("  ", "Service reminder", m_service_reminder);
 }
 
-void HeliosKwlComponent::set_fan_speed(float speed) {
-  if (speed == 0.f) {
+void HeliosKwlComponent::control_fan(bool on, optional<uint8_t> speed) {
+  if (!on) {
     set_state_flag(0, false);
   } else {
-    assert(speed >= 0.f && speed <= 8.f);
-    const uint8_t speed_byte = 0xFF >> (8 - static_cast<int>(speed * 8));
-    if (set_value(0x29, speed_byte)) {
-      ESP_LOGD(TAG, "Wrote speed: %02x", speed_byte);
-      set_state_flag(0, true);
+    if (speed.has_value()) {
+      uint8_t s = *speed;
+      if (s >= 1 && s <= 8) {
+        const uint8_t speed_byte = 0xFF >> (8 - s);
+        if (set_value(0x29, speed_byte)) {
+          ESP_LOGD(TAG, "Wrote speed: %02x", speed_byte);
+          set_state_flag(0, true);
+        } else {
+          ESP_LOGE(TAG, "Failed to set fan speed");
+        }
+      }
     } else {
-      ESP_LOGE(TAG, "Failed to set fan speed");
+      set_state_flag(0, true);
     }
   }
 }
@@ -139,14 +146,30 @@ void HeliosKwlComponent::poll_temperature_incoming() {
 
 void HeliosKwlComponent::poll_fan_speed() {
   if (const auto value = poll_register(0x29)) {
-    m_fan_speed->publish_state(count_ones(*value));
+    uint8_t spd = count_ones(*value);
+    if (m_fan_speed != nullptr) {
+      m_fan_speed->publish_state(spd);
+    }
+    if (m_fan != nullptr) {
+      if (spd > 0) {
+        m_fan->speed = spd;
+        m_fan->publish_state();
+      }
+    }
   }
 }
 
 void HeliosKwlComponent::poll_states() {
   if (const auto value = poll_register(0xA3)) {
+    bool pwr = *value & (0x01 << 0);
     if (m_power_state != nullptr) {
-      m_power_state->publish_state(*value & (0x01 << 0));
+      m_power_state->publish_state(pwr);
+    }
+    if (m_fan != nullptr) {
+      if (m_fan->state != pwr) {
+        m_fan->state = pwr;
+        m_fan->publish_state();
+      }
     }
     const bool bypass_state = *value & (0x01 << 3);
     if (m_bypass_state != nullptr) {

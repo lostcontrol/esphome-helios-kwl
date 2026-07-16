@@ -108,13 +108,6 @@ switch:
       id: helios_kwl_winter
 
 fan:
-  - platform: speed
-    output: helios_kwl_speed
-    speed_count: 8
-    name: "Fan speed"
-
-output:
   - platform: helios_kwl
     helios_kwl_id: helios_kwl_0
-    fan_speed:
-      id: helios_kwl_speed
+    name: "Ventilation Fan"
