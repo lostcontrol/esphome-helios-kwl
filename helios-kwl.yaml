@@ -49,9 +49,6 @@ sensor:
 
   - platform: helios_kwl
     helios_kwl_id: helios_kwl_0
-    fan_speed:
-      name: "Fan speed"
-      id: fan_speed
     temperature_outside:
       name: "Temperature outside"
       id: sensor_temperature_outside
