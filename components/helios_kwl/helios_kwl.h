@@ -31,7 +31,6 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
 
   void set_fan(HeliosKwlFan* fan) { m_fan = fan; }
 
-  void set_fan_speed_sensor(sensor::Sensor* sensor) { m_fan_speed = sensor; }
   void set_temperature_outside_sensor(sensor::Sensor* sensor) { m_temperature_outside = sensor; }
   void set_temperature_exhaust_sensor(sensor::Sensor* sensor) { m_temperature_exhaust = sensor; }
   void set_temperature_inside_sensor(sensor::Sensor* sensor) { m_temperature_inside = sensor; }
@@ -50,7 +49,6 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   void poll_temperature_exhaust();
   void poll_temperature_inside();
   void poll_temperature_incoming();
-  void poll_fan_speed();
   void poll_states();
 
   optional<uint8_t> poll_register(uint8_t address);
@@ -73,7 +71,6 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   static uint8_t count_ones(uint8_t byte);
 
  private:
-  sensor::Sensor* m_fan_speed{nullptr};
   sensor::Sensor* m_temperature_outside{nullptr};
   sensor::Sensor* m_temperature_exhaust{nullptr};
   sensor::Sensor* m_temperature_inside{nullptr};

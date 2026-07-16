@@ -41,10 +41,6 @@ void HeliosKwlComponent::setup() {
     m_pollers.push_back([this]() { poll_temperature_incoming(); });
   }
 
-  if (m_fan_speed != nullptr) {
-    m_pollers.push_back([this]() { poll_fan_speed(); });
-  }
-
   const std::vector<const EntityBase*> states{m_power_state,       m_bypass_state,    m_winter_mode_switch,
                                               m_heating_indicator, m_fault_indicator, m_service_reminder};
   if (std::any_of(states.cbegin(), states.cend(), [](const EntityBase* pointer) { return pointer != nullptr; })) {
@@ -67,7 +63,6 @@ void HeliosKwlComponent::update() {
 
 void HeliosKwlComponent::dump_config() {
   ESP_LOGCONFIG(TAG, "Helios KWL:");
-  LOG_SENSOR("  ", "Fan speed", m_fan_speed);
   LOG_SENSOR("  ", "Temperature outside", m_temperature_outside);
   LOG_SENSOR("  ", "Temperature exhaust", m_temperature_exhaust);
   LOG_SENSOR("  ", "Temperature inside", m_temperature_inside);
@@ -144,30 +139,30 @@ void HeliosKwlComponent::poll_temperature_incoming() {
   }
 }
 
-void HeliosKwlComponent::poll_fan_speed() {
-  if (const auto value = poll_register(0x29)) {
-    uint8_t spd = count_ones(*value);
-    if (m_fan_speed != nullptr) {
-      m_fan_speed->publish_state(spd);
-    }
-    if (m_fan != nullptr) {
-      if (spd > 0) {
-        m_fan->speed = spd;
-        m_fan->publish_state();
-      }
-    }
-  }
-}
-
 void HeliosKwlComponent::poll_states() {
   if (const auto value = poll_register(0xA3)) {
     bool pwr = *value & (0x01 << 0);
     if (m_power_state != nullptr) {
       m_power_state->publish_state(pwr);
     }
+
+    // Also poll fan speed to sync the fan component speed level
     if (m_fan != nullptr) {
+      bool fan_changed = false;
       if (m_fan->state != pwr) {
         m_fan->state = pwr;
+        fan_changed = true;
+      }
+
+      if (const auto speed_val = poll_register(0x29)) {
+        uint8_t spd = count_ones(*speed_val);
+        if (spd > 0 && m_fan->speed != spd) {
+          m_fan->speed = spd;
+          fan_changed = true;
+        }
+      }
+
+      if (fan_changed) {
         m_fan->publish_state();
       }
     }
