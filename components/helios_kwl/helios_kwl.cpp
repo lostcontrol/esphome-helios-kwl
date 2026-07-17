@@ -67,6 +67,7 @@ void HeliosKwlComponent::dump_config() {
   LOG_SENSOR("  ", "Temperature exhaust", m_temperature_exhaust);
   LOG_SENSOR("  ", "Temperature inside", m_temperature_inside);
   LOG_SENSOR("  ", "Temperature incoming", m_temperature_incoming);
+  LOG_SENSOR("  ", "Fan speed", m_fan_speed);
   LOG_BINARY_SENSOR("  ", "Power state", m_power_state);
   LOG_BINARY_SENSOR("  ", "Bypass state", m_bypass_state);
   LOG_BINARY_SENSOR("  ", "Fault indicator", m_fault_indicator);
@@ -147,22 +148,30 @@ void HeliosKwlComponent::poll_states() {
     }
 
     // Also poll fan speed to sync the fan component speed level
-    if (m_fan != nullptr) {
+    if (m_fan != nullptr || m_fan_speed != nullptr) {
       bool fan_changed = false;
-      if (m_fan->state != pwr) {
-        m_fan->state = pwr;
-        fan_changed = true;
-      }
 
-      if (const auto speed_val = poll_register(0x29)) {
-        uint8_t spd = count_ones(*speed_val);
-        if (spd > 0 && m_fan->speed != spd) {
-          m_fan->speed = spd;
+      if (m_fan != nullptr) {
+        if (m_fan->state != pwr) {
+          m_fan->state = pwr;
           fan_changed = true;
         }
       }
 
-      if (fan_changed) {
+      if (const auto speed_val = poll_register(0x29)) {
+        uint8_t spd = count_ones(*speed_val);
+
+        if (m_fan != nullptr && spd > 0 && m_fan->speed != spd) {
+          m_fan->speed = spd;
+          fan_changed = true;
+        }
+
+        if (m_fan_speed != nullptr) {
+          m_fan_speed->publish_state(pwr ? spd : 0);
+        }
+      }
+
+      if (fan_changed && m_fan != nullptr) {
         m_fan->publish_state();
       }
     }

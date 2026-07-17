@@ -77,6 +77,9 @@ sensor:
         - median:
             window_size: 3
             send_every: 1
+    fan_speed:
+      name: "Fan speed"
+      id: sensor_fan_speed
 
 binary_sensor:
   - platform: helios_kwl
