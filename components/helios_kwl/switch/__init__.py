@@ -1,13 +1,19 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import switch
+from esphome.const import ENTITY_CATEGORY_CONFIG
 
 from .. import CONF_HELIOS_KWL_ID, HELIOS_KWL_COMPONENT_SCHEMA, helios_kwl_component_ns
 
 HeliosKwlWinterMode = helios_kwl_component_ns.class_("HeliosKwlWinterMode", switch.Switch, cg.Component)
 
 TYPES = {
-    "winter_mode": switch.switch_schema(HeliosKwlWinterMode, block_inverted=True),
+    "winter_mode": switch.switch_schema(
+        HeliosKwlWinterMode,
+        block_inverted=True,
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        icon="mdi:snowflake",
+    ),
 }
 
 CONFIG_SCHEMA = HELIOS_KWL_COMPONENT_SCHEMA.extend({cv.Optional(type): schema for type, schema in TYPES.items()})
