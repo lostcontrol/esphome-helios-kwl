@@ -22,6 +22,10 @@ TYPES = {
         unit_of_measurement=UNIT_CELSIUS,
         accuracy_decimals=0,
     ),
+    "fan_speed": sensor.sensor_schema(
+        icon="mdi:fan",
+        accuracy_decimals=0,
+    ),
 }
 
 CONFIG_SCHEMA = HELIOS_KWL_COMPONENT_SCHEMA.extend({cv.Optional(type): schema for type, schema in TYPES.items()})
