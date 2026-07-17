@@ -185,19 +185,9 @@ void HeliosKwlComponent::poll_states() {
   }
 }
 
-optional<uint8_t> HeliosKwlComponent::poll_register(uint8_t address) {
-  // Flush read buffer
-  flush_read_buffer();
-
-  // Write
-  Datagram temp = {0x01, ADDRESS, MAINBOARD, 0x00, address};
-  temp[5] = checksum(temp.cbegin(), temp.cend());
-  write_array(temp);
-  flush();
-
-  // Read response, skipping interleaved broadcasts from the mainboard or remotes
+optional<std::array<uint8_t, 6>> HeliosKwlComponent::read_packet(uint8_t address, uint32_t timeout_ms) {
   uint32_t start_time = millis();
-  while (millis() - start_time < 50) {
+  while (millis() - start_time < timeout_ms) {
     if (!available()) {
       yield();
       continue;
@@ -242,7 +232,24 @@ optional<uint8_t> HeliosKwlComponent::poll_register(uint8_t address) {
     }
 
     // Got a valid, correctly-addressed response
-    return array[4];
+    return array;
+  }
+  return {};
+}
+
+optional<uint8_t> HeliosKwlComponent::poll_register(uint8_t address) {
+  // Flush read buffer
+  flush_read_buffer();
+
+  // Write
+  Datagram temp = {0x01, ADDRESS, MAINBOARD, 0x00, address};
+  temp[5] = checksum(temp.cbegin(), temp.cend());
+  write_array(temp);
+  flush();
+
+  // Read response, skipping interleaved broadcasts from the mainboard or remotes
+  if (const auto response = read_packet(address)) {
+    return (*response)[4];
   }
   return {};
 }
