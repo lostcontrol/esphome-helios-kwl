@@ -42,7 +42,6 @@ TYPES = {
     "fan_speed": sensor.sensor_schema(
         icon="mdi:speedometer",
         accuracy_decimals=0,
-        state_class=STATE_CLASS_MEASUREMENT,
         entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
     ),
 }
