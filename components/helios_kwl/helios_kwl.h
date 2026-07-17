@@ -51,10 +51,10 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   void poll_temperature_incoming();
   void poll_states();
 
-  optional<std::array<uint8_t, 6>> read_packet(uint8_t address, uint32_t timeout_ms = 50);
   optional<uint8_t> poll_register(uint8_t address);
 
   bool set_value(uint8_t address, uint8_t value);
+  bool wait_for_echo(uint8_t echo_byte, uint32_t timeout_ms = 50);
 
   void flush_read_buffer();
 
