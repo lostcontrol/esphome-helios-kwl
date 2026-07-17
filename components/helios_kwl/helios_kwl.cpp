@@ -222,21 +222,38 @@ optional<uint8_t> HeliosKwlComponent::poll_register(uint8_t address) {
   return {};
 }
 
+bool HeliosKwlComponent::wait_for_echo(uint8_t echo_byte, uint32_t timeout_ms) {
+  uint32_t wait_start = millis();
+  while (millis() - wait_start < timeout_ms) {
+    if (available()) {
+      if (read() == echo_byte) {
+        return true;
+      }
+    } else {
+      yield();
+    }
+  }
+  return false;
+}
+
 bool HeliosKwlComponent::set_value(uint8_t address, uint8_t value) {
   Datagram temp = {0x01, ADDRESS, MAINBOARD, address, value};
   temp[5] = checksum(temp.cbegin(), temp.cend());
 
   // To the mainboard
   int retry = 3;
+  bool success = false;
   do {
     // Flush read buffer
     flush_read_buffer();
     // Write
     write_array(temp);
     flush();
-  } while (read() != temp[5] && retry-- > 0);
 
-  return retry >= 0;
+    success = wait_for_echo(temp[5]);
+  } while (!success && retry-- > 0);
+
+  return success;
 }
 
 void HeliosKwlComponent::flush_read_buffer() {
