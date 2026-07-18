@@ -41,10 +41,14 @@ void HeliosKwlComponent::setup() {
     m_pollers.push_back([this]() { poll_temperature_incoming(); });
   }
 
-  const std::vector<const EntityBase*> states{m_power_state,       m_bypass_state,    m_winter_mode_switch,
+  const std::vector<const EntityBase*> states{m_power_state,       m_winter_mode_switch,
                                               m_heating_indicator, m_fault_indicator, m_service_reminder};
   if (std::any_of(states.cbegin(), states.cend(), [](const EntityBase* pointer) { return pointer != nullptr; })) {
     m_pollers.push_back([&]() { poll_states(); });
+  }
+
+  if (m_bypass_state != nullptr) {
+    m_pollers.push_back([this]() { poll_bypass(); });
   }
 
   m_current_poller = m_pollers.cbegin();
@@ -140,6 +144,14 @@ void HeliosKwlComponent::poll_temperature_incoming() {
   }
 }
 
+void HeliosKwlComponent::poll_bypass() {
+  if (const auto value = poll_register(0x08)) {
+    if (m_bypass_state != nullptr) {
+      m_bypass_state->publish_state(*value & (0x01 << 1));
+    }
+  }
+}
+
 void HeliosKwlComponent::poll_states() {
   if (const auto value = poll_register(0xA3)) {
     bool pwr = *value & (0x01 << 0);
@@ -175,12 +187,9 @@ void HeliosKwlComponent::poll_states() {
         m_fan->publish_state();
       }
     }
-    const bool bypass_state = *value & (0x01 << 3);
-    if (m_bypass_state != nullptr) {
-      m_bypass_state->publish_state(bypass_state);
-    }
+    const bool winter_mode = *value & (0x01 << 3);
     if (m_winter_mode_switch != nullptr) {
-      m_winter_mode_switch->publish_state(bypass_state);
+      m_winter_mode_switch->publish_state(winter_mode);
     }
     if (m_heating_indicator != nullptr) {
       m_heating_indicator->publish_state(*value & (0x01 << 5));
