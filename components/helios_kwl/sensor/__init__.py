@@ -1,12 +1,7 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
-from esphome.const import (
-    DEVICE_CLASS_TEMPERATURE,
-    ENTITY_CATEGORY_DIAGNOSTIC,
-    STATE_CLASS_MEASUREMENT,
-    UNIT_CELSIUS,
-)
+from esphome.const import DEVICE_CLASS_TEMPERATURE, ENTITY_CATEGORY_DIAGNOSTIC, STATE_CLASS_MEASUREMENT, UNIT_CELSIUS
 
 from .. import CONF_HELIOS_KWL_ID, HELIOS_KWL_COMPONENT_SCHEMA
 
@@ -40,9 +35,10 @@ TYPES = {
         icon="mdi:thermometer",
     ),
     "fan_speed": sensor.sensor_schema(
-        icon="mdi:speedometer",
         accuracy_decimals=0,
         entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
+        state_class=STATE_CLASS_MEASUREMENT,
+        icon="mdi:speedometer",
     ),
 }
 
