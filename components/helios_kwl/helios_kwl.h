@@ -19,7 +19,7 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
  private:
   static constexpr uint8_t ADDRESS = 0x2F;
   static constexpr uint8_t MAINBOARD = 0x11;
-  static const int TEMPERATURE[];
+  static const int NTC_TO_CELSIUS[];
 
  public:
   using Datagram = std::array<uint8_t, 6>;
