@@ -31,14 +31,14 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   void control_fan(bool on, optional<uint8_t> speed);
   void set_state_flag(uint8_t bit, bool state);
 
-  void control_bypass_operating_temperature(float c);
+  void control_bypass_operating_temperature(uint8_t c);
   void control_dc_supply_air_fan_control_setpoint(uint8_t p);
   void control_dc_exhaust_fan_control_setpoint(uint8_t p);
 
   void control_max_fan_speed(uint8_t s);
   void control_basic_fan_speed(uint8_t s);
   void control_service_reminder_interval(uint8_t m);
-  void acknowledge_maintenance();
+  void reset_maintenance_reminder();
 
 
 
@@ -108,7 +108,7 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   static uint8_t count_ones(uint8_t byte);
 
   static float ntc_to_celsius(uint8_t n);
-  static uint8_t celsius_to_ntc(float c);
+  static uint8_t celsius_to_ntc(int8_t c);
 
 
  private:

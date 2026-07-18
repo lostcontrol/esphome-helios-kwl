@@ -6,11 +6,11 @@ from esphome.const import ENTITY_CATEGORY_CONFIG
 from .. import CONF_HELIOS_KWL_ID, HELIOS_KWL_COMPONENT_SCHEMA, helios_kwl_component_ns
 
 HeliosKwlButtonBase = helios_kwl_component_ns.class_("HeliosKwlButtonBase", button.Button, cg.Component)
-HeliosKwlAckMaintenanceButton = helios_kwl_component_ns.class_("HeliosKwlAckMaintenanceButton", HeliosKwlButtonBase)
+HeliosKwlResetMaintenanceReminderButton = helios_kwl_component_ns.class_("HeliosKwlResetMaintenanceReminderButton", HeliosKwlButtonBase)
 
 TYPES = {
     "reset_maintenance_reminder": button.button_schema(
-        HeliosKwlAckMaintenanceButton,
+        HeliosKwlResetMaintenanceReminderButton,
         entity_category=ENTITY_CATEGORY_CONFIG,
         icon="mdi:air-filter",
     ),

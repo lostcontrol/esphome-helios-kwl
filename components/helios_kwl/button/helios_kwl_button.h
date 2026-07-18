@@ -14,11 +14,11 @@ class HeliosKwlButtonBase : public button::Button, public Component {
   HeliosKwlComponent *m_parent{nullptr};
 };
 
-class HeliosKwlAckMaintenanceButton : public HeliosKwlButtonBase {
+class HeliosKwlResetMaintenanceReminderButton : public HeliosKwlButtonBase {
  protected:
   void press_action() override {
     if (m_parent != nullptr) {
-      m_parent->acknowledge_maintenance();
+      m_parent->reset_maintenance_reminder();
     }
   }
 };

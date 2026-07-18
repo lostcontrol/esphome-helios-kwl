@@ -54,25 +54,25 @@ void HeliosKwlComponent::setup() {
   }
 
   if (m_bypass_operating_temperature != nullptr) {
-    m_pollers.push_back([this]() { poll_bypass_operating_temperature(); });
+    m_pollers.push_back([&]() { poll_bypass_operating_temperature(); });
   }
   if (m_dc_supply_air_fan_control_setpoint != nullptr) {
-    m_pollers.push_back([this]() { poll_dc_supply_air_fan_control_setpoint(); });
+    m_pollers.push_back([&]() { poll_dc_supply_air_fan_control_setpoint(); });
   }
   if (m_dc_exhaust_fan_control_setpoint != nullptr) {
-    m_pollers.push_back([this]() { poll_dc_exhaust_fan_control_setpoint(); });
+    m_pollers.push_back([&]() { poll_dc_exhaust_fan_control_setpoint(); });
   }
   if (m_max_fan_speed != nullptr) {
-    m_pollers.push_back([this]() { poll_max_fan_speed(); });
+    m_pollers.push_back([&]() { poll_max_fan_speed(); });
   }
   if (m_basic_fan_speed != nullptr) {
-    m_pollers.push_back([this]() { poll_basic_fan_speed(); });
+    m_pollers.push_back([&]() { poll_basic_fan_speed(); });
   }
   if (m_service_reminder_interval != nullptr) {
-    m_pollers.push_back([this]() { poll_service_reminder_interval(); });
+    m_pollers.push_back([&]() { poll_service_reminder_interval(); });
   }
   if (m_service_reminder_monthly_counter != nullptr) {
-    m_pollers.push_back([this]() { poll_service_reminder_monthly_counter(); });
+    m_pollers.push_back([&]() { poll_service_reminder_monthly_counter(); });
   }
 
   m_current_poller = m_pollers.cbegin();
@@ -100,7 +100,13 @@ void HeliosKwlComponent::dump_config() {
   LOG_BINARY_SENSOR("  ", "Bypass state", m_bypass_state);
   LOG_BINARY_SENSOR("  ", "Fault indicator", m_fault_indicator);
   LOG_BINARY_SENSOR("  ", "Service reminder", m_service_reminder);
-  // Optional components not fully dumped yet
+  LOG_NUMBER("  ", "Bypass operating temperature", m_bypass_operating_temperature);
+  LOG_NUMBER("  ", "DC supply air fan control setpoint", m_dc_supply_air_fan_control_setpoint);
+  LOG_NUMBER("  ", "DC exhaust fan control setpoint", m_dc_exhaust_fan_control_setpoint);
+  LOG_NUMBER("  ", "Max fan speed", m_max_fan_speed);
+  LOG_NUMBER("  ", "Basic fan speed", m_basic_fan_speed);
+  LOG_NUMBER("  ", "Service reminder interval", m_service_reminder_interval);
+  LOG_SENSOR("  ", "Service reminder monthly counter", m_service_reminder_monthly_counter);
 }
 
 void HeliosKwlComponent::control_fan(bool on, optional<uint8_t> speed) {
@@ -211,7 +217,7 @@ void HeliosKwlComponent::poll_service_reminder_monthly_counter() {
 }
 
 
-void HeliosKwlComponent::control_bypass_operating_temperature(float c) {
+void HeliosKwlComponent::control_bypass_operating_temperature(uint8_t c) {
   set_value(0xAF, celsius_to_ntc(c));
 }
 void HeliosKwlComponent::control_dc_supply_air_fan_control_setpoint(uint8_t p) {
@@ -222,21 +228,21 @@ void HeliosKwlComponent::control_dc_exhaust_fan_control_setpoint(uint8_t p) {
 }
 
 void HeliosKwlComponent::control_max_fan_speed(uint8_t s) {
-  uint8_t mask = s == 0 ? 0 : (uint8_t)((1u << (s > 8 ? 8 : s)) - 1u);
+  uint8_t mask = s == 0 ? 0 : (uint8_t)((1u << std::min(static_cast<uint8_t>(8), s)) - 1u);
   set_value(0xA5, mask);
 }
 void HeliosKwlComponent::control_basic_fan_speed(uint8_t s) {
-  uint8_t mask = s == 0 ? 0 : (uint8_t)((1u << (s > 8 ? 8 : s)) - 1u);
+  uint8_t mask = s == 0 ? 0 : (uint8_t)((1u << std::min(static_cast<uint8_t>(8), s)) - 1u);
   set_value(0xA9, mask);
 }
 void HeliosKwlComponent::control_service_reminder_interval(uint8_t m) {
   set_value(0xA6, m);
 }
 
-void HeliosKwlComponent::acknowledge_maintenance() {
-  ESP_LOGI(TAG, "Reset filtres");
-  if (auto iv = poll_register(0xA6)) {
-    set_value(0xAB, *iv);
+void HeliosKwlComponent::reset_maintenance_reminder() {
+  ESP_LOGI(TAG, "Reset maintenance reminder");
+  if (const auto interval = poll_register(0xA6)) {
+    set_value(0xAB, *interval);
   } else {
     set_value(0xAB, 4);
   }
@@ -368,20 +374,27 @@ float HeliosKwlComponent::ntc_to_celsius(uint8_t n) {
   return TEMPERATURE[n];
 }
 
-uint8_t HeliosKwlComponent::celsius_to_ntc(float c) {
-  if (c < -74) c = -74;
-  if (c > 100) c = 100;
-  int t = (int)c;
-  uint8_t best = 0x64;
-  int bd = 255;
-  for (int i = 0x00; i <= 0xFF; i++) {
-    int d = abs(TEMPERATURE[i] - t);
-    if (d < bd) {
-      bd = d;
-      best = i;
-    }
+uint8_t HeliosKwlComponent::celsius_to_ntc(int8_t c) {
+  static constexpr uint8_t CELSIUS_TO_NTC[175] = {
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01, 0x02, 0x02, 0x02, 0x02, 0x03, 0x03, 0x03, 0x04, 0x04,
+      0x04, 0x05, 0x05, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0F, 0x10, 0x11, 0x12, 0x13, 0x15,
+      0x16, 0x17, 0x18, 0x1A, 0x1C, 0x1D, 0x1F, 0x20, 0x22, 0x24, 0x25, 0x28, 0x2A, 0x2C, 0x2F, 0x31, 0x33, 0x36,
+      0x38, 0x3C, 0x3E, 0x42, 0x44, 0x48, 0x4A, 0x4E, 0x51, 0x55, 0x59, 0x5C, 0x61, 0x64, 0x69, 0x6E, 0x73, 0x79,
+      0x7E, 0x83, 0x8A, 0x8F, 0x96, 0x9C, 0xA3, 0xAB, 0xB2, 0xB9, 0xC1, 0xC8, 0xCF, 0xD6, 0xDD, 0xE4, 0xEA, 0xF0,
+      0xF6, 0xFB, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+      0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+      0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+      0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+      0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+  };
+
+  if (c < -74) {
+    return CELSIUS_TO_NTC[0];
   }
-  return best;
+  if (c > 100) {
+    return CELSIUS_TO_NTC[174];
+  }
+  return CELSIUS_TO_NTC[c + 74];
 }
 
 }  // namespace helios_kwl_component

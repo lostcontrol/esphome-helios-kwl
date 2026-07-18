@@ -8,25 +8,25 @@ from .. import CONF_HELIOS_KWL_ID, HELIOS_KWL_COMPONENT_SCHEMA, helios_kwl_compo
 HeliosKwlNumber = helios_kwl_component_ns.class_("HeliosKwlNumber", number.Number)
 
 
-def _ns(mn, mx, st, u, ic):
+def number_schema(min_value, max_value, step, unit, icon):
     return number.number_schema(
-        HeliosKwlNumber, entity_category=ENTITY_CATEGORY_CONFIG, unit_of_measurement=u, icon=ic
+        HeliosKwlNumber, entity_category=ENTITY_CATEGORY_CONFIG, unit_of_measurement=unit, icon=icon
     ).extend(
         {
-            cv.Optional(CONF_MIN_VALUE, default=mn): cv.float_,
-            cv.Optional(CONF_MAX_VALUE, default=mx): cv.float_,
-            cv.Optional(CONF_STEP, default=st): cv.positive_float,
+            cv.Optional(CONF_MIN_VALUE, default=min_value): cv.int_,
+            cv.Optional(CONF_MAX_VALUE, default=max_value): cv.int_,
+            cv.Optional(CONF_STEP, default=step): cv.positive_int,
         }
     )
 
 
 TYPES = {
-    "bypass_operating_temperature": _ns(0, 25, 1, UNIT_CELSIUS, "mdi:thermometer-chevron-up"),
-    "dc_supply_air_fan_control_setpoint": _ns(65, 100, 1, UNIT_PERCENT, "mdi:fan-speed-1"),
-    "dc_exhaust_fan_control_setpoint": _ns(65, 100, 1, UNIT_PERCENT, "mdi:fan-speed-2"),
-    "max_fan_speed": _ns(1, 8, 1, "", "mdi:fan-plus"),
-    "basic_fan_speed": _ns(1, 8, 1, "", "mdi:fan-minus"),
-    "service_reminder_interval": _ns(1, 15, 1, "months", "mdi:wrench-clock"),
+    "bypass_operating_temperature": number_schema(0, 25, 1, UNIT_CELSIUS, "mdi:thermometer-chevron-up"),
+    "dc_supply_air_fan_control_setpoint": number_schema(65, 100, 1, UNIT_PERCENT, "mdi:fan-speed-1"),
+    "dc_exhaust_fan_control_setpoint": number_schema(65, 100, 1, UNIT_PERCENT, "mdi:fan-speed-2"),
+    "max_fan_speed": number_schema(1, 8, 1, "", "mdi:fan-plus"),
+    "basic_fan_speed": number_schema(1, 8, 1, "", "mdi:fan-minus"),
+    "service_reminder_interval": number_schema(1, 15, 1, "months", "mdi:wrench-clock"),
 }
 
 CONFIG_SCHEMA = HELIOS_KWL_COMPONENT_SCHEMA.extend({cv.Optional(type): schema for type, schema in TYPES.items()})
@@ -35,7 +35,7 @@ _MAP = [
     (
         "bypass_operating_temperature",
         "set_bypass_operating_temperature_number",
-        "set_float_setter",
+        "set_uint8_setter",
         "control_bypass_operating_temperature",
     ),
     (
