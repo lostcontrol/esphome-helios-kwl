@@ -1,7 +1,7 @@
 #include "helios_kwl.h"
-#include "fan/helios_kwl_fan.h"
 
 #include "esphome/core/log.h"
+#include "fan/helios_kwl_fan.h"
 
 namespace esphome {
 namespace helios_kwl_component {
@@ -41,14 +41,15 @@ void HeliosKwlComponent::setup() {
     m_pollers.push_back([this]() { poll_temperature_incoming(); });
   }
 
-  const std::vector<const EntityBase*> states{m_power_state,       m_winter_mode_switch,
-                                              m_heating_indicator, m_fault_indicator, m_service_reminder};
+  const std::vector<const EntityBase*> states{m_power_state, m_winter_mode_switch, m_heating_indicator,
+                                              m_fault_indicator, m_service_reminder};
   if (std::any_of(states.cbegin(), states.cend(), [](const EntityBase* pointer) { return pointer != nullptr; })) {
     m_pollers.push_back([&]() { poll_states(); });
   }
 
   const std::vector<const EntityBase*> io_port_states{m_bypass_state};
-  if (std::any_of(io_port_states.cbegin(), io_port_states.cend(), [](const EntityBase* pointer) { return pointer != nullptr; })) {
+  if (std::any_of(io_port_states.cbegin(), io_port_states.cend(),
+                  [](const EntityBase* pointer) { return pointer != nullptr; })) {
     m_pollers.push_back([&]() { poll_io_port(); });
   }
 
@@ -84,9 +85,8 @@ void HeliosKwlComponent::control_fan(bool on, optional<uint8_t> speed) {
     set_state_flag(0, false);
   } else {
     if (speed.has_value()) {
-      uint8_t s = *speed;
-      if (s >= 1 && s <= 8) {
-        const uint8_t speed_byte = 0xFF >> (8 - s);
+      if (*speed >= 1 && *speed <= 8) {
+        const uint8_t speed_byte = 0xFF >> (8 - *speed);
         if (set_value(0x29, speed_byte)) {
           ESP_LOGD(TAG, "Wrote speed: %02x", speed_byte);
           set_state_flag(0, true);
