@@ -6,7 +6,9 @@ from esphome.const import ENTITY_CATEGORY_CONFIG
 from .. import CONF_HELIOS_KWL_ID, HELIOS_KWL_COMPONENT_SCHEMA, helios_kwl_component_ns
 
 HeliosKwlButtonBase = helios_kwl_component_ns.class_("HeliosKwlButtonBase", button.Button, cg.Component)
-HeliosKwlResetMaintenanceReminderButton = helios_kwl_component_ns.class_("HeliosKwlResetMaintenanceReminderButton", HeliosKwlButtonBase)
+HeliosKwlResetMaintenanceReminderButton = helios_kwl_component_ns.class_(
+    "HeliosKwlResetMaintenanceReminderButton", HeliosKwlButtonBase
+)
 
 TYPES = {
     "reset_maintenance_reminder": button.button_schema(
