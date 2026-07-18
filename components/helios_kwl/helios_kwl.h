@@ -7,6 +7,8 @@
 #include "esphome/components/switch/switch.h"
 #include "esphome/components/uart/uart.h"
 #include "esphome/core/component.h"
+#include "esphome/components/number/number.h"
+#include "esphome/components/button/button.h"
 
 namespace esphome {
 namespace helios_kwl_component {
@@ -29,6 +31,17 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   void control_fan(bool on, optional<uint8_t> speed);
   void set_state_flag(uint8_t bit, bool state);
 
+  void control_bypass_operating_temperature(float c);
+  void control_dc_supply_air_fan_control_setpoint(uint8_t p);
+  void control_dc_exhaust_fan_control_setpoint(uint8_t p);
+
+  void control_max_fan_speed(uint8_t s);
+  void control_basic_fan_speed(uint8_t s);
+  void control_service_reminder_interval(uint8_t m);
+  void acknowledge_maintenance();
+
+
+
   void set_fan(HeliosKwlFan* fan) { m_fan = fan; }
 
   void set_temperature_outside_sensor(sensor::Sensor* sensor) { m_temperature_outside = sensor; }
@@ -36,6 +49,7 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   void set_temperature_inside_sensor(sensor::Sensor* sensor) { m_temperature_inside = sensor; }
   void set_temperature_incoming_sensor(sensor::Sensor* sensor) { m_temperature_incoming = sensor; }
   void set_fan_speed_sensor(sensor::Sensor* sensor) { m_fan_speed = sensor; }
+  void set_service_reminder_monthly_counter_sensor(sensor::Sensor* sensor) { m_service_reminder_monthly_counter = sensor; }
 
   void set_power_state_sensor(binary_sensor::BinarySensor* sensor) { m_power_state = sensor; }
   void set_bypass_state_sensor(binary_sensor::BinarySensor* sensor) { m_bypass_state = sensor; }
@@ -45,6 +59,16 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
 
   void set_winter_mode_switch(switch_::Switch* switch_) { m_winter_mode_switch = switch_; }
 
+  void set_bypass_operating_temperature_number(number::Number* number) { m_bypass_operating_temperature = number; }
+  void set_dc_supply_air_fan_control_setpoint_number(number::Number* number) { m_dc_supply_air_fan_control_setpoint = number; }
+  void set_dc_exhaust_fan_control_setpoint_number(number::Number* number) { m_dc_exhaust_fan_control_setpoint = number; }
+
+  void set_max_fan_speed_number(number::Number* number) { m_max_fan_speed = number; }
+  void set_basic_fan_speed_number(number::Number* number) { m_basic_fan_speed = number; }
+  void set_service_reminder_interval_number(number::Number* number) { m_service_reminder_interval = number; }
+
+
+
  private:
   void poll_temperature_outside();
   void poll_temperature_exhaust();
@@ -52,6 +76,17 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   void poll_temperature_incoming();
   void poll_states();
   void poll_io_port();
+
+  void poll_bypass_operating_temperature();
+  void poll_dc_supply_air_fan_control_setpoint();
+  void poll_dc_exhaust_fan_control_setpoint();
+
+  void poll_max_fan_speed();
+  void poll_basic_fan_speed();
+  void poll_service_reminder_interval();
+  void poll_service_reminder_monthly_counter();
+
+
 
   optional<uint8_t> poll_register(uint8_t address);
 
@@ -72,6 +107,10 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
 
   static uint8_t count_ones(uint8_t byte);
 
+  static float ntc_to_celsius(uint8_t n);
+  static uint8_t celsius_to_ntc(float c);
+
+
  private:
   sensor::Sensor* m_temperature_outside{nullptr};
   sensor::Sensor* m_temperature_exhaust{nullptr};
@@ -86,6 +125,17 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   binary_sensor::BinarySensor* m_service_reminder{nullptr};
 
   switch_::Switch* m_winter_mode_switch{nullptr};
+
+  number::Number* m_bypass_operating_temperature{nullptr};
+  number::Number* m_dc_supply_air_fan_control_setpoint{nullptr};
+  number::Number* m_dc_exhaust_fan_control_setpoint{nullptr};
+
+  number::Number* m_max_fan_speed{nullptr};
+  number::Number* m_basic_fan_speed{nullptr};
+  number::Number* m_service_reminder_interval{nullptr};
+  sensor::Sensor* m_service_reminder_monthly_counter{nullptr};
+
+
 
   HeliosKwlFan* m_fan{nullptr};
 
