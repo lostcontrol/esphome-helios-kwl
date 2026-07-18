@@ -47,8 +47,9 @@ void HeliosKwlComponent::setup() {
     m_pollers.push_back([&]() { poll_states(); });
   }
 
-  if (m_bypass_state != nullptr) {
-    m_pollers.push_back([this]() { poll_bypass(); });
+  const std::vector<const EntityBase*> io_port_states{m_bypass_state};
+  if (std::any_of(io_port_states.cbegin(), io_port_states.cend(), [](const EntityBase* pointer) { return pointer != nullptr; })) {
+    m_pollers.push_back([&]() { poll_io_port(); });
   }
 
   m_current_poller = m_pollers.cbegin();
@@ -144,7 +145,7 @@ void HeliosKwlComponent::poll_temperature_incoming() {
   }
 }
 
-void HeliosKwlComponent::poll_bypass() {
+void HeliosKwlComponent::poll_io_port() {
   if (const auto value = poll_register(0x08)) {
     if (m_bypass_state != nullptr) {
       m_bypass_state->publish_state(*value & (0x01 << 1));
@@ -187,9 +188,8 @@ void HeliosKwlComponent::poll_states() {
         m_fan->publish_state();
       }
     }
-    const bool winter_mode = *value & (0x01 << 3);
     if (m_winter_mode_switch != nullptr) {
-      m_winter_mode_switch->publish_state(winter_mode);
+      m_winter_mode_switch->publish_state(*value & (0x01 << 3));
     }
     if (m_heating_indicator != nullptr) {
       m_heating_indicator->publish_state(*value & (0x01 << 5));
