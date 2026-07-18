@@ -51,6 +51,7 @@ class HeliosKwlComponent : public uart::UARTDevice, public PollingComponent {
   void poll_temperature_inside();
   void poll_temperature_incoming();
   void poll_states();
+  void poll_io_port();
 
   optional<uint8_t> poll_register(uint8_t address);
 
