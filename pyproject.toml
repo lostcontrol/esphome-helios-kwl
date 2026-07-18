@@ -15,11 +15,13 @@ classifiers = [
 
 dependencies = [
     "esphome>=2025.2.2",
-    "pip>=25.2",
 ]
 
 [dependency-groups]
-dev = ["ruff>=0.9.10"]
+dev = [
+    "pre-commit>=4.6.0",
+    "ruff>=0.9.10",
+]
 
 [tool.ruff]
 target-version = "py312"

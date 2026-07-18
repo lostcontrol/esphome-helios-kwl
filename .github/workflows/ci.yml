@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
+      - name: Run pre-commit
+        run: uv run pre-commit run --all-files
+
       - name: Create secrets.yaml
         run: |
           cat << 'EOF' > secrets.yaml
