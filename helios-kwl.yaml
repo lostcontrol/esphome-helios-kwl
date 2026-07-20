@@ -80,6 +80,9 @@ sensor:
     fan_speed:
       name: "Fan speed"
       id: sensor_fan_speed
+    service_reminder_monthly_counter:
+      name: "Service Reminder Monthly Counter"
+      id: sensor_service_reminder_monthly_counter
 
 binary_sensor:
   - platform: helios_kwl
@@ -111,3 +114,32 @@ fan:
   - platform: helios_kwl
     helios_kwl_id: helios_kwl_0
     name: "Ventilation Fan"
+
+number:
+  - platform: helios_kwl
+    helios_kwl_id: helios_kwl_0
+    bypass_operating_temperature:
+      name: "Bypass Operating Temperature"
+      id: number_bypass_operating_temperature
+    dc_supply_air_fan_control_setpoint:
+      name: "DC Supply Air Fan Control Setpoint"
+      id: number_dc_supply_air_fan_control_setpoint
+    dc_exhaust_fan_control_setpoint:
+      name: "DC Exhaust Fan Control Setpoint"
+      id: number_dc_exhaust_fan_control_setpoint
+    max_fan_speed:
+      name: "Max Fan Speed"
+      id: number_max_fan_speed
+    basic_fan_speed:
+      name: "Basic Fan Speed"
+      id: number_basic_fan_speed
+    service_reminder_interval:
+      name: "Service Reminder Interval"
+      id: number_service_reminder_interval
+
+button:
+  - platform: helios_kwl
+    helios_kwl_id: helios_kwl_0
+    reset_maintenance_reminder:
+      name: "Reset Maintenance Reminder"
+      id: button_reset_maintenance_reminder

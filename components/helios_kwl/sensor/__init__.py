@@ -40,6 +40,13 @@ TYPES = {
         state_class=STATE_CLASS_MEASUREMENT,
         icon="mdi:speedometer",
     ),
+    "service_reminder_monthly_counter": sensor.sensor_schema(
+        unit_of_measurement="months",
+        accuracy_decimals=0,
+        entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
+        state_class=STATE_CLASS_MEASUREMENT,
+        icon="mdi:calendar-month",
+    ),
 }
 
 CONFIG_SCHEMA = HELIOS_KWL_COMPONENT_SCHEMA.extend({cv.Optional(type): schema for type, schema in TYPES.items()})
