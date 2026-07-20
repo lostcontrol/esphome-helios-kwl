@@ -21,7 +21,7 @@ def number_schema(min_value, max_value, step, unit, icon):
 
 
 TYPES = {
-    "bypass_operating_temperature": number_schema(0, 25, 1, UNIT_CELSIUS, "mdi:thermometer-chevron-up"),
+    "bypass_operating_temperature": number_schema(0, 20, 1, UNIT_CELSIUS, "mdi:thermometer-chevron-up"),
     "dc_supply_air_fan_control_setpoint": number_schema(65, 100, 1, UNIT_PERCENT, "mdi:fan-speed-1"),
     "dc_exhaust_fan_control_setpoint": number_schema(65, 100, 1, UNIT_PERCENT, "mdi:fan-speed-2"),
     "max_fan_speed": number_schema(1, 8, 1, "", "mdi:fan-plus"),
@@ -35,7 +35,7 @@ _MAP = [
     (
         "bypass_operating_temperature",
         "set_bypass_operating_temperature_number",
-        "set_uint8_setter",
+        "set_int8_setter",
         "control_bypass_operating_temperature",
     ),
     (
