@@ -1,32 +1,29 @@
 #include "helios_kwl_fan.h"
+
 #include "esphome/core/log.h"
 
 namespace esphome {
 namespace helios_kwl_component {
 
-static const char *TAG = "helios_kwl.fan";
+static const char* TAG = "helios_kwl.fan";
 
-void HeliosKwlFan::control(const fan::FanCall &call) {
-  if (parent_ == nullptr)
-    return;
+void HeliosKwlFan::control(const fan::FanCall& call) {
+  if (m_parent == nullptr) return;
 
-  optional<uint8_t> spd;
+  optional<uint8_t> new_speed;
   if (call.get_speed().has_value()) {
-    spd = static_cast<uint8_t>(*call.get_speed());
+    new_speed = static_cast<uint8_t>(*call.get_speed());
   }
 
-  bool on = this->state;
-  if (call.get_state().has_value()) {
-    on = *call.get_state();
-  }
+  const bool on = call.get_state().value_or(this->state);
 
-  parent_->control_fan(on, spd);
+  m_parent->control_fan(on, new_speed);
 
   if (call.get_state().has_value()) {
     this->state = *call.get_state();
   }
-  if (spd.has_value()) {
-    this->speed = *spd;
+  if (new_speed.has_value()) {
+    speed = *new_speed;
   }
   this->publish_state();
 }

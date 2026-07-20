@@ -17,15 +17,15 @@ resolution-markers = [
     "python_full_version < '3.13' and platform_machine == 'x86_64' and sys_platform == 'darwin'",
 ]
 dependencies = [
-    { name = "aiohappyeyeballs", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "async-interrupt", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "chacha20poly1305-reuseable", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "cryptography", version = "48.0.1", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "noiseprotocol", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "protobuf", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "tzdata", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "tzlocal", version = "5.3.1", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "zeroconf", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
+    { name = "aiohappyeyeballs" },
+    { name = "async-interrupt" },
+    { name = "chacha20poly1305-reuseable" },
+    { name = "cryptography", version = "48.0.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "noiseprotocol" },
+    { name = "protobuf" },
+    { name = "tzdata" },
+    { name = "tzlocal", version = "5.3.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "zeroconf" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/09/91/eb22ee6d5fdf7e847cb62e8631baf6807241b829b12bf07862d17f3cd267/aioesphomeapi-45.3.1.tar.gz", hash = "sha256:a88947c09878b0cf94a59cbe3c8af75fe479ff82f1ba497fd4fd651661cad735", size = 222561, upload-time = "2026-05-26T21:10:53.488Z" }
 wheels = [
@@ -45,15 +45,15 @@ resolution-markers = [
     "(python_full_version < '3.13' and platform_machine != 'x86_64') or (python_full_version < '3.13' and sys_platform != 'darwin')",
 ]
 dependencies = [
-    { name = "aiohappyeyeballs", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "async-interrupt", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "chacha20poly1305-reuseable", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "cryptography", version = "49.0.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "noiseprotocol", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "protobuf", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "tzdata", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "tzlocal", version = "5.4.4", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "zeroconf", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "aiohappyeyeballs" },
+    { name = "async-interrupt" },
+    { name = "chacha20poly1305-reuseable" },
+    { name = "cryptography", version = "49.0.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "noiseprotocol" },
+    { name = "protobuf" },
+    { name = "tzdata" },
+    { name = "tzlocal", version = "5.4.4", source = { registry = "https://pypi.org/simple" } },
+    { name = "zeroconf" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/57/af/7f83d725c98d69e21eb0da98bea4f2bb40d110dacbf2ab931278fe2c593e/aioesphomeapi-45.6.0.tar.gz", hash = "sha256:a2db88693a69ac0b1504fd75cf951984ba2ab360c3c63f92fc72e820ef816a3b", size = 226680, upload-time = "2026-07-09T19:34:50.657Z" }
 wheels = [
@@ -629,7 +629,7 @@ resolution-markers = [
     "python_full_version < '3.13' and platform_machine == 'x86_64' and sys_platform == 'darwin'",
 ]
 dependencies = [
-    { name = "cffi", marker = "platform_machine == 'x86_64' and platform_python_implementation != 'PyPy' and sys_platform == 'darwin'" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/12/45/870e7f4bef50e5f53b9f51d4428aee5290eedf58ba443f16b1ebb7ab8e66/cryptography-48.0.1.tar.gz", hash = "sha256:266f4ee051abb2f725b74ef8072b521ce1feacf685a3364fa6a6b45548db791a", size = 832989, upload-time = "2026-06-09T22:32:31.8Z" }
 wheels = [
@@ -647,7 +647,7 @@ resolution-markers = [
     "(python_full_version < '3.13' and platform_machine != 'x86_64') or (python_full_version < '3.13' and sys_platform != 'darwin')",
 ]
 dependencies = [
-    { name = "cffi", marker = "(platform_machine != 'x86_64' and platform_python_implementation != 'PyPy') or (platform_python_implementation != 'PyPy' and sys_platform != 'darwin')" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1f/99/d1c90d6041656cc6ee229dc99cd67fd0cd5aec3c5f7d72fffc27cc750054/cryptography-49.0.0.tar.gz", hash = "sha256:f89660a348f4f78a92366240a61404e337586ef7f5909a2fef59ca88ef505493", size = 854345, upload-time = "2026-06-12T20:02:30.512Z" }
 wheels = [
@@ -743,36 +743,36 @@ resolution-markers = [
     "python_full_version < '3.13' and platform_machine == 'x86_64' and sys_platform == 'darwin'",
 ]
 dependencies = [
-    { name = "aioesphomeapi", version = "45.3.1", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "argcomplete", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "bleak", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "click", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "colorama", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "cryptography", version = "48.0.1", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "esphome-dashboard", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "esphome-glyphsets", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "esptool", version = "5.3.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "freetype-py", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "icmplib", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "jinja2", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "paho-mqtt", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "pillow", version = "12.2.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "platformio", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "puremagic", version = "1.30", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "py7zr", version = "1.1.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "pyparsing", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "pyserial", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "pyyaml", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "requests", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "resvg-py", version = "0.3.2", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "ruamel-yaml", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "ruamel-yaml-clib", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "smpclient", version = "6.0.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "tornado", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "tzdata", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "tzlocal", version = "5.3.1", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "voluptuous", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "zeroconf", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
+    { name = "aioesphomeapi", version = "45.3.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "argcomplete" },
+    { name = "bleak" },
+    { name = "click" },
+    { name = "colorama" },
+    { name = "cryptography", version = "48.0.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "esphome-dashboard" },
+    { name = "esphome-glyphsets" },
+    { name = "esptool", version = "5.3.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "freetype-py" },
+    { name = "icmplib" },
+    { name = "jinja2" },
+    { name = "paho-mqtt" },
+    { name = "pillow", version = "12.2.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "platformio" },
+    { name = "puremagic", version = "1.30", source = { registry = "https://pypi.org/simple" } },
+    { name = "py7zr", version = "1.1.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "pyparsing" },
+    { name = "pyserial" },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "resvg-py", version = "0.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "ruamel-yaml" },
+    { name = "ruamel-yaml-clib" },
+    { name = "smpclient", version = "6.0.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "tornado" },
+    { name = "tzdata" },
+    { name = "tzlocal", version = "5.3.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "voluptuous" },
+    { name = "zeroconf" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ad/2e/c8042be4cec6c5544094742fc23986a33f792f6ffe3d2915e95d34df04c6/esphome-2026.6.5.tar.gz", hash = "sha256:a83efdc1f65a09057159ceeffbd4daab6aa11c639fb0f0f3f254c1174b1a8538", size = 4533148, upload-time = "2026-07-09T00:21:44.939Z" }
 wheels = [
@@ -788,34 +788,34 @@ resolution-markers = [
     "(python_full_version < '3.13' and platform_machine != 'x86_64') or (python_full_version < '3.13' and sys_platform != 'darwin')",
 ]
 dependencies = [
-    { name = "aioesphomeapi", version = "45.6.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "argcomplete", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "bleak", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "click", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "colorama", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "cryptography", version = "49.0.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "esphome-glyphsets", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "esptool", version = "5.3.1", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "freetype-py", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "jinja2", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "paho-mqtt", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "pillow", version = "12.3.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "platformdirs", version = "4.10.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "platformio", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "puremagic", version = "2.2.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "py7zr", version = "1.1.3", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "pyparsing", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "pyserial", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "pyyaml", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "requests", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "resvg-py", version = "0.3.3", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "ruamel-yaml", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "ruamel-yaml-clib", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "smpclient", version = "7.2.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "tzdata", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "tzlocal", version = "5.4.4", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "voluptuous", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "zeroconf", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "aioesphomeapi", version = "45.6.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "argcomplete" },
+    { name = "bleak" },
+    { name = "click" },
+    { name = "colorama" },
+    { name = "cryptography", version = "49.0.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "esphome-glyphsets" },
+    { name = "esptool", version = "5.3.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "freetype-py" },
+    { name = "jinja2" },
+    { name = "paho-mqtt" },
+    { name = "pillow", version = "12.3.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "platformdirs", version = "4.10.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "platformio" },
+    { name = "puremagic", version = "2.2.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "py7zr", version = "1.1.3", source = { registry = "https://pypi.org/simple" } },
+    { name = "pyparsing" },
+    { name = "pyserial" },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "resvg-py", version = "0.3.3", source = { registry = "https://pypi.org/simple" } },
+    { name = "ruamel-yaml" },
+    { name = "ruamel-yaml-clib" },
+    { name = "smpclient", version = "7.2.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "tzdata" },
+    { name = "tzlocal", version = "5.4.4", source = { registry = "https://pypi.org/simple" } },
+    { name = "voluptuous" },
+    { name = "zeroconf" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d3/56/1749a8c7f65ee3585d9f35865992e1b27d7d05c19135bc5fb7f64d41e645/esphome-2026.7.0.tar.gz", hash = "sha256:ad25c329744fa5f9431a4a9d766441f7de3672c66490d8694eabf8c2049568fc", size = 4663014, upload-time = "2026-07-16T01:00:06.376Z" }
 wheels = [
@@ -872,14 +872,14 @@ resolution-markers = [
     "python_full_version < '3.13' and platform_machine == 'x86_64' and sys_platform == 'darwin'",
 ]
 dependencies = [
-    { name = "bitstring", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "click", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "cryptography", version = "48.0.1", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "intelhex", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "pyserial", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "pyyaml", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "reedsolo", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "rich-click", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
+    { name = "bitstring" },
+    { name = "click" },
+    { name = "cryptography", version = "48.0.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "intelhex" },
+    { name = "pyserial" },
+    { name = "pyyaml" },
+    { name = "reedsolo" },
+    { name = "rich-click" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/82/ca/aa2a6aafe214b3338eb56c5dc941e7e83a0f9e8b9bd05ac91b5d1a6ee9c9/esptool-5.3.0.tar.gz", hash = "sha256:0a077cb3ee8e60e223882c06ab7dae9b3686816c2547904d7472a42e6284e7de", size = 487446, upload-time = "2026-06-01T15:21:45.662Z" }
 
@@ -892,14 +892,14 @@ resolution-markers = [
     "(python_full_version < '3.13' and platform_machine != 'x86_64') or (python_full_version < '3.13' and sys_platform != 'darwin')",
 ]
 dependencies = [
-    { name = "bitstring", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "click", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "cryptography", version = "49.0.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "intelhex", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "pyserial", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "pyyaml", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "reedsolo", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "rich-click", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "bitstring" },
+    { name = "click" },
+    { name = "cryptography", version = "49.0.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "intelhex" },
+    { name = "pyserial" },
+    { name = "pyyaml" },
+    { name = "reedsolo" },
+    { name = "rich-click" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/76/ac/d2016cf6b3709d0e0166f45f84bc6e2d717757b5f59020ccb34de08d1b9b/esptool-5.3.1.tar.gz", hash = "sha256:125781f36e6a2d08c484524a45f340694675368b5eeead9d0cb21b2034a91d98", size = 488230, upload-time = "2026-06-29T06:34:33.823Z" }
 
@@ -1421,16 +1421,16 @@ resolution-markers = [
     "python_full_version < '3.13' and platform_machine == 'x86_64' and sys_platform == 'darwin'",
 ]
 dependencies = [
-    { name = "backports-zstd", marker = "python_full_version < '3.14' and platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "brotli", marker = "platform_machine == 'x86_64' and platform_python_implementation == 'CPython' and sys_platform == 'darwin'" },
-    { name = "brotlicffi", marker = "platform_machine == 'x86_64' and platform_python_implementation == 'PyPy' and sys_platform == 'darwin'" },
-    { name = "inflate64", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "multivolumefile", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "psutil", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "pybcj", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "pycryptodomex", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "pyppmd", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "texttable", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
+    { name = "backports-zstd", marker = "python_full_version < '3.14'" },
+    { name = "brotli", marker = "platform_python_implementation == 'CPython'" },
+    { name = "brotlicffi", marker = "platform_python_implementation == 'PyPy'" },
+    { name = "inflate64" },
+    { name = "multivolumefile" },
+    { name = "psutil" },
+    { name = "pybcj" },
+    { name = "pycryptodomex" },
+    { name = "pyppmd" },
+    { name = "texttable" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0c/e6/01fb15361ca75ee5d01df6361825a49816a836c99980c5481da0e40c6877/py7zr-1.1.0.tar.gz", hash = "sha256:087b1a94861ad9eb4d21604f6aaa0a8986a7e00580abd79fedd6f82fecf0592c", size = 70855, upload-time = "2025-12-21T03:27:44.653Z" }
 wheels = [
@@ -1446,16 +1446,16 @@ resolution-markers = [
     "(python_full_version < '3.13' and platform_machine != 'x86_64') or (python_full_version < '3.13' and sys_platform != 'darwin')",
 ]
 dependencies = [
-    { name = "backports-zstd", marker = "(python_full_version < '3.14' and platform_machine != 'x86_64') or (python_full_version < '3.14' and sys_platform != 'darwin')" },
-    { name = "brotli", marker = "(platform_machine != 'x86_64' and platform_python_implementation == 'CPython') or (platform_python_implementation == 'CPython' and sys_platform != 'darwin')" },
-    { name = "brotlicffi", marker = "(platform_machine != 'x86_64' and platform_python_implementation == 'PyPy') or (platform_python_implementation == 'PyPy' and sys_platform != 'darwin')" },
-    { name = "inflate64", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "multivolumefile", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "psutil", marker = "(platform_machine != 'x86_64' and sys_platform == 'darwin') or (sys_platform != 'cygwin' and sys_platform != 'darwin')" },
-    { name = "pybcj", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "pycryptodomex", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "pyppmd", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "texttable", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "backports-zstd", marker = "python_full_version < '3.14'" },
+    { name = "brotli", marker = "platform_python_implementation == 'CPython'" },
+    { name = "brotlicffi", marker = "platform_python_implementation == 'PyPy'" },
+    { name = "inflate64" },
+    { name = "multivolumefile" },
+    { name = "psutil", marker = "sys_platform != 'cygwin'" },
+    { name = "pybcj" },
+    { name = "pycryptodomex" },
+    { name = "pyppmd" },
+    { name = "texttable" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/59/3f/ac248f25f3901d3d6cf80ac99d5bac6fd1e5e6543c1812c79b02b6074c60/py7zr-1.1.3.tar.gz", hash = "sha256:8d51894abb38355bf14881088bb97f01fe4cb5b14ebe22f66d6297668c7e1a74", size = 71695, upload-time = "2026-06-19T09:28:29.339Z" }
 wheels = [
@@ -2091,10 +2091,10 @@ resolution-markers = [
     "python_full_version < '3.13' and platform_machine == 'x86_64' and sys_platform == 'darwin'",
 ]
 dependencies = [
-    { name = "bleak", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "intelhex", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "pyserial", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
-    { name = "smp", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
+    { name = "bleak" },
+    { name = "intelhex" },
+    { name = "pyserial" },
+    { name = "smp" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/47/b0/3a8808c4872811b49d1a639a5d9e8ea16bd222a93b73e566f36ec135d31a/smpclient-6.0.0.tar.gz", hash = "sha256:15b7a4e4627ccca82d94def2fc5b837de5fdd8e7c81783764df9ee62ba8b2500", size = 25813, upload-time = "2025-12-18T00:50:35.239Z" }
 wheels = [
@@ -2110,8 +2110,8 @@ resolution-markers = [
     "(python_full_version < '3.13' and platform_machine != 'x86_64') or (python_full_version < '3.13' and sys_platform != 'darwin')",
 ]
 dependencies = [
-    { name = "intelhex", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
-    { name = "smp", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "intelhex" },
+    { name = "smp" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d8/b6/97dfe4c50f56fafcf64302832ef14d6648df47907f2e971362f2c03459e8/smpclient-7.2.0.tar.gz", hash = "sha256:cbd111a61b42fc6ce39454fee0ceec17ba3670eaf6fe126b9fef9764d8e5bb6d", size = 4260002, upload-time = "2026-06-11T20:42:44.311Z" }
 wheels = [
@@ -2308,7 +2308,7 @@ name = "winrt-runtime"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/16/dd/acdd527c1d890c8f852cc2af644aa6c160974e66631289420aa871b05e65/winrt_runtime-3.2.1.tar.gz", hash = "sha256:c8dca19e12b234ae6c3dadf1a4d0761b51e708457492c13beb666556958801ea", size = 21721, upload-time = "2025-06-06T14:40:27.593Z" }
 wheels = [
@@ -2328,7 +2328,7 @@ name = "winrt-windows-devices-bluetooth"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "winrt-runtime" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b2/a0/1c8a0c469abba7112265c6cb52f0090d08a67c103639aee71fc690e614b8/winrt_windows_devices_bluetooth-3.2.1.tar.gz", hash = "sha256:db496d2d92742006d5a052468fc355bf7bb49e795341d695c374746113d74505", size = 23732, upload-time = "2025-06-06T14:41:20.489Z" }
 wheels = [
@@ -2348,7 +2348,7 @@ name = "winrt-windows-devices-bluetooth-advertisement"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "winrt-runtime" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/06/fc/7ffe66ca4109b9e994b27c00f3d2d506e6e549e268791f755287ad9106d8/winrt_windows_devices_bluetooth_advertisement-3.2.1.tar.gz", hash = "sha256:0223852a7b7fa5c8dea3c6a93473bd783df4439b1ed938d9871f947933e574cc", size = 16906, upload-time = "2025-06-06T14:41:21.448Z" }
 wheels = [
@@ -2368,7 +2368,7 @@ name = "winrt-windows-devices-bluetooth-genericattributeprofile"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "winrt-runtime" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/44/21/aeeddc0eccdfbd25e543360b5cc093233e2eab3cdfb53ad3cabae1b5d04d/winrt_windows_devices_bluetooth_genericattributeprofile-3.2.1.tar.gz", hash = "sha256:cdf6ddc375e9150d040aca67f5a17c41ceaf13a63f3668f96608bc1d045dde71", size = 38896, upload-time = "2025-06-06T14:41:22.687Z" }
 wheels = [
@@ -2388,7 +2388,7 @@ name = "winrt-windows-devices-enumeration"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "winrt-runtime" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9e/dd/75835bfbd063dffa152109727dedbd80f6e92ea284855f7855d48cdf31c9/winrt_windows_devices_enumeration-3.2.1.tar.gz", hash = "sha256:df316899e39bfc0ffc1f3cb0f5ee54d04e1d167fbbcc1484d2d5121449a935cf", size = 23538, upload-time = "2025-06-06T14:41:26.787Z" }
 wheels = [
@@ -2408,7 +2408,7 @@ name = "winrt-windows-devices-radios"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "winrt-runtime" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5e/02/9704ea359ad8b0d6faa1011f98fb477e8fb6eac5201f39d19e73c2407e7b/winrt_windows_devices_radios-3.2.1.tar.gz", hash = "sha256:4dc9b9d1501846049eb79428d64ec698d6476c27a357999b78a8331072e18a0b", size = 5908, upload-time = "2025-06-06T14:41:44.868Z" }
 wheels = [
@@ -2428,7 +2428,7 @@ name = "winrt-windows-foundation"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "winrt-runtime" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0c/55/098ce7ea0679efcc1298b269c48768f010b6c68f90c588f654ec874c8a74/winrt_windows_foundation-3.2.1.tar.gz", hash = "sha256:ad2f1fcaa6c34672df45527d7c533731fdf65b67c4638c2b4aca949f6eec0656", size = 30485, upload-time = "2025-06-06T14:41:53.344Z" }
 wheels = [
@@ -2448,7 +2448,7 @@ name = "winrt-windows-foundation-collections"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "winrt-runtime" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ef/62/d21e3f1eeb8d47077887bbf0c3882c49277a84d8f98f7c12bda64d498a07/winrt_windows_foundation_collections-3.2.1.tar.gz", hash = "sha256:0eff1ad0d8d763ad17e9e7bbd0c26a62b27215016393c05b09b046d6503ae6d5", size = 16043, upload-time = "2025-06-06T14:41:53.983Z" }
 wheels = [
@@ -2468,7 +2468,7 @@ name = "winrt-windows-storage-streams"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "winrt-runtime", marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
+    { name = "winrt-runtime" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/00/50/f4488b07281566e3850fcae1021f0285c9653992f60a915e15567047db63/winrt_windows_storage_streams-3.2.1.tar.gz", hash = "sha256:476f522722751eb0b571bc7802d85a82a3cae8b1cce66061e6e758f525e7b80f", size = 34335, upload-time = "2025-06-06T14:43:23.905Z" }
 wheels = [
