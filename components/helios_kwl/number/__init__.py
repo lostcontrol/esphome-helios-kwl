@@ -63,12 +63,13 @@ _MAP = [
 
 async def to_code(config):
     parent = await cg.get_variable(config[CONF_HELIOS_KWL_ID])
-    for ck, ps, nsm, cm in _MAP:
-        if ck in config:
-            conf = config[ck]
+    for config_key, pointer_setter, number_setter_method, control_method in _MAP:
+        if config_key in config:
+            conf = config[config_key]
             num = await number.new_number(
                 conf, min_value=conf[CONF_MIN_VALUE], max_value=conf[CONF_MAX_VALUE], step=conf[CONF_STEP]
             )
-            cg.add(getattr(parent, ps)(num))
+            cg.add(getattr(parent, pointer_setter)(num))
             cg.add(num.set_parent(parent))
-            cg.add(getattr(num, nsm)(cg.RawExpression(f"&helios_kwl_component::HeliosKwlComponent::{cm}")))
+            raw_expression = cg.RawExpression(f"&helios_kwl_component::HeliosKwlComponent::{control_method}")
+            cg.add(getattr(num, number_setter_method)(raw_expression))
