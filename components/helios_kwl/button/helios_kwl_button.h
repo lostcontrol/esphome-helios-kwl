@@ -1,7 +1,7 @@
 #pragma once
 
-#include "esphome/components/button/button.h"
 #include "../helios_kwl.h"
+#include "esphome/components/button/button.h"
 
 namespace esphome {
 namespace helios_kwl_component {
