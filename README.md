@@ -29,7 +29,7 @@ external_components:
   - source:
       type: git
       url: https://github.com/lostcontrol/esphome-helios-kwl/
-      ref: 2025.3.1
+      ref: 2026.9.1
 ```
 
 ## Disclaimer
